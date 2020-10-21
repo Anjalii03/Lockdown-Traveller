@@ -1,5 +1,9 @@
 package Client;
-
+/*
+*
+* PRIYANSHI DIXIT
+*
+*/
 import java.io.IOException;
 import java.net.Socket;
 
@@ -21,6 +25,6 @@ public class Client {
     public void login() throws IOException{
         System.out.println("in login area");
         Login log=new Login();
-        log.setVisible(true);                 
+        log.setVisible(true);
     }
 }

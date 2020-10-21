@@ -1,5 +1,9 @@
 package Server;
-
+/*
+*
+* PRIYANSHI DIXIT
+*
+*/
 import java.sql.*;
 
 public class DatabaseManager {
@@ -9,7 +13,7 @@ public class DatabaseManager {
         try{ 
         Class.forName("com.mysql.jdbc.Driver");
         System.out.println("success");
-        con=DriverManager.getConnection("jdbc:mysql://localhost:3308/train","root","");
+        con=DriverManager.getConnection("jdbc:mysql://localhost:3308/softablitz","root","");
         st=con.createStatement();
         System.out.println("connected to database");
         }
@@ -30,7 +34,7 @@ public class DatabaseManager {
     }
     public boolean Checklogin(String inputuspass) {
         try{
-            String sql="Select * from user";      
+            String sql="Select username,password from user";      
             ResultSet rs = st.executeQuery(sql);
             boolean flag=false;
             while(rs.next()) {

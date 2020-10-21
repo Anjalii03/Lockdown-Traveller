@@ -1,15 +1,14 @@
 
 package Client;
-
+/**
+*
+* @PRIYANSHI DIXIT
+*/
 import static Client.Client.socket;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author user
- */
 public class Login extends javax.swing.JFrame {
 
     /** Creates new form Login */
@@ -91,12 +90,17 @@ public class Login extends javax.swing.JFrame {
        else{
             LoginRequest l=new LoginRequest(username.getText(),password.getText());
             try{
-            ObjectOutputStream objectOutputStream =new ObjectOutputStream(socket.getOutputStream());
+            ObjectOutputStream dout=new ObjectOutputStream(socket.getOutputStream());
+            dout.writeUTF("1");
+            System.out.println("sending 1"); 
             LoginRequest lg=new LoginRequest(l.getusername(),l.getpassword());
-            objectOutputStream.writeObject(lg);
-            objectOutputStream.flush();   
+            dout.writeObject(lg);
+            dout.flush();   
+            ObjectInputStream din=new ObjectInputStream(socket.getInputStream());
+            String act=din.readUTF();
+            System.out.println("Server says "+act);
             }catch(IOException e){
-            System.out.print(e);
+            System.out.print(e+"button here");
             }
        }
     }//GEN-LAST:event_processButtonActionPerformed

@@ -1,5 +1,9 @@
 package Server;
-
+/*
+*
+* PRIYANSHI DIXIT
+*
+*/
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -20,7 +24,7 @@ public class Server {
                 Thread t = new Thread(new HandleClient(socket));
                 t.start();
             } catch (IOException e) {
-                System.out.println(e);
+                System.out.println(e+"hey there");
             }
 
         }
