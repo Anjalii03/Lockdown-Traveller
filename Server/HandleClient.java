@@ -10,47 +10,47 @@ import java.io.*;
 import java.net.Socket;
 
 public class HandleClient implements Runnable {
-    ObjectInputStream objectInputStream;
-    ObjectOutputStream objectOutputStream;
-    public HandleClient(Socket socket) {
-         try {
-            objectInputStream = new ObjectInputStream(socket.getInputStream());
-            objectOutputStream=new ObjectOutputStream(socket.getOutputStream());  
-        } catch (IOException e) {
-            System.out.println(e+"infinite here");
-        }
+   
+    Socket socket;
+    public HandleClient(Socket socket) throws IOException {
+        this.socket=socket;
+               
     }
 
     @Override
     public void run() {
         while (true) {
-            try {
+            try {  
+                 ObjectInputStream objectInputStream=new ObjectInputStream(socket.getInputStream());
+                 ObjectOutputStream objectOutputStream=new ObjectOutputStream(socket.getOutputStream());
                 DatabaseManager db=new DatabaseManager();
-                String func=(String)objectInputStream.readUTF();
+                db.setConnection();                                //database connection established
+                int func=(int)objectInputStream.readInt();        //client returns action number
                 System.out.println("Action is "+func);
                 switch (func){
-                    case "1":
-                            System.out.println("action in progress");
-                            LoginRequest log = (LoginRequest) objectInputStream.readObject();
-                            System.out.println("Message received");
-                            System.out.println(log); 
-                            if(db.Checklogin(log.toString())){
-                            System.out.println("got u"); 
-                            objectOutputStream.writeUTF("got u");
-                            objectOutputStream.flush();
-                            }
-                            else{
-                            objectOutputStream.writeUTF("ur not here");
-                            objectOutputStream.flush();
-                            break;
-                            }
-                    case "2":
-                            break;    
+                    case 1 : 
+                        System.out.println("action in progress");
+                        LoginRequest log = (LoginRequest) objectInputStream.readObject();
+                        System.out.println("Message received");
+                        System.out.println(log);
+                        objectOutputStream.writeBoolean(db.Checklogin(log));
+                        objectOutputStream.flush();
+                    break;
+                    case 2 :
+                         System.out.println("action in progress");
+                        RegisterRequest reg = (RegisterRequest) objectInputStream.readObject();
+                        System.out.println("Message received");
+                        System.out.println(reg);
+                        objectOutputStream.writeBoolean(db.Register(reg));
+                        objectOutputStream.flush();
+                        break;
                 }
+                
                 System.out.println("closing connection");
                 db.CloseConnection();
-            }catch(Exception e){
-                System.out.println(e+" here");
+                
+            }catch(IOException | ClassNotFoundException e){
+                System.out.println(e+" here all the errors");
                 break;
             }
         }

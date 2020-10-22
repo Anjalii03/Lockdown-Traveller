@@ -24,7 +24,7 @@ public class Client {
     
     public void login() throws IOException{
         System.out.println("in login area");
-        Login log=new Login();
+        LoginPage log=new LoginPage();
         log.setVisible(true);
     }
 }

@@ -10,12 +10,6 @@ public class LoginRequest implements Serializable {
 
       String username,password;
 
-         public void setusername(String username){
-         this.username= username;
-         }
-         public void setpassword(String password){
-         this.password= password;
-         }
          public String getusername(){
          return username;
          }
@@ -27,7 +21,7 @@ public class LoginRequest implements Serializable {
         this.password=pass;
     }
 
-    @Override
+   // @Override
     public String toString(){
         return String.valueOf(username+" "+password);
     }
