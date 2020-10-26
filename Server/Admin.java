@@ -71,6 +71,11 @@ public class Admin extends javax.swing.JFrame {
         });
 
         UpdateSeats.setText("Add/Remove Seats");
+        UpdateSeats.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UpdateSeatsActionPerformed(evt);
+            }
+        });
 
         UpdateTrain.setText("Add/Remove/Cancel Train");
 
@@ -192,6 +197,12 @@ public class Admin extends javax.swing.JFrame {
         new AdminLoginPage().setVisible(true);
                 
     }//GEN-LAST:event_logoutActionPerformed
+
+    private void UpdateSeatsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateSeatsActionPerformed
+        // TODO add your handling code here:
+        this.hide();
+        new UpdateSeats().setVisible(true);
+    }//GEN-LAST:event_UpdateSeatsActionPerformed
 
     /**
      * @param args the command line arguments

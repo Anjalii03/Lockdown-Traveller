@@ -5,7 +5,6 @@
  */
 package Client;
 
-import railway.TrainsBetween;
 
 /**
  *
@@ -20,10 +19,7 @@ public class TrainDetails extends javax.swing.JFrame {
     public TrainDetails() {
         initComponents();
         setLocation(250,150);
-        JLabel tr_no =new JLabel("000)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))0");
-        //tr_no.setFont(new Font("TIMES NEW ROMAN",Font.bold,18));
-        tr_no.setBounds(250,150,200,200);
-        add(tr_no);
+       
     }
 
     /**
@@ -225,9 +221,9 @@ public class TrainDetails extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        TrainsBetween tb = new TrainsBetween();
+        //TrainsBetween tb = new TrainsBetween();
         this.hide();
-        tb.setVisible(true);
+        //tb.setVisible(true);
         
     }//GEN-LAST:event_jButton2ActionPerformed
 

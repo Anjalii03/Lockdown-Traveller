@@ -5,16 +5,26 @@
  */
 package Server;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
- * @author user
+ * @author Priyanshi Dixit
  */
-public class UpdateSeates extends javax.swing.JFrame {
+public class UpdateSeats extends javax.swing.JFrame {
 
     /**
      * Creates new form UpdateSeates
      */
-    public UpdateSeates() {
+    public UpdateSeats() {
         initComponents();
     }
 
@@ -35,8 +45,8 @@ public class UpdateSeates extends javax.swing.JFrame {
         back = new javax.swing.JButton();
         update = new javax.swing.JButton();
         seates = new javax.swing.JLabel();
-        train_no1 = new javax.swing.JTextField();
-        jTextField1 = new javax.swing.JTextField();
+        train_no = new javax.swing.JTextField();
+        seats = new javax.swing.JTextField();
         ac = new javax.swing.JCheckBox();
         sleeper = new javax.swing.JCheckBox();
         add = new javax.swing.JCheckBox();
@@ -61,6 +71,11 @@ public class UpdateSeates extends javax.swing.JFrame {
         jLabel5.setText("Number of Seates");
 
         back.setText("Back");
+        back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backActionPerformed(evt);
+            }
+        });
 
         update.setText("Update");
         update.addActionListener(new java.awt.event.ActionListener() {
@@ -69,15 +84,15 @@ public class UpdateSeates extends javax.swing.JFrame {
             }
         });
 
-        train_no1.addActionListener(new java.awt.event.ActionListener() {
+        train_no.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                train_no1ActionPerformed(evt);
+                train_noActionPerformed(evt);
             }
         });
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        seats.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                seatsActionPerformed(evt);
             }
         });
 
@@ -96,8 +111,18 @@ public class UpdateSeates extends javax.swing.JFrame {
         });
 
         add.setText("Add");
+        add.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addActionPerformed(evt);
+            }
+        });
 
         remove.setText("Remove");
+        remove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -113,13 +138,13 @@ public class UpdateSeates extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(train_no1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(train_no, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(seates, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(seats, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel4Layout.createSequentialGroup()
                                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(add)
@@ -142,12 +167,12 @@ public class UpdateSeates extends javax.swing.JFrame {
                 .addGap(31, 31, 31)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(train_no1, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
+                    .addComponent(train_no, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(seates, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(seats, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -214,15 +239,79 @@ public class UpdateSeates extends javax.swing.JFrame {
 
     private void updateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateActionPerformed
         // TODO add your handling code here:
+        if(train_no.getText().equals("")||seats.getText().equals("")){
+             JOptionPane.showMessageDialog(this , "Blank not allowed!!");
+        }
+        else{
+            try
+            {
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3308/softablitz?","root","");
+            Statement st = con.createStatement();
+            String currentSeatsInAC="";
+            String currentSeatsInSleeper="";
+            String sql="Select * from trainstatus";      
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()) {
+                String dataTrain_no=rs.getString("train_no");
+                if(dataTrain_no.equals(this.train_no.getText())){
+                    currentSeatsInAC=rs.getString("seats_in_ac");
+                    currentSeatsInSleeper=rs.getString("seats_in_sleeper");
+                    break;
+                }
+                }
+            String act="";
+            if(add.isSelected()){
+                act="+";
+            }
+            else{
+                act="-";
+            }
+            if(ac.isSelected()){
+                if(Integer.parseInt(currentSeatsInAC)<Integer.parseInt(seats.getText())&&act.equals("-")){
+                     JOptionPane.showMessageDialog(this , "Not enough seats to remove");
+                }
+                else{
+                    int s=0;
+                    if(act.equals("-")){
+                        s=Integer.parseInt(currentSeatsInAC)-Integer.parseInt(seats.getText());
+                    }
+                     if(act.equals("+")){
+                        s=Integer.parseInt(currentSeatsInAC)+Integer.parseInt(seats.getText());
+                    }
+                    st.executeUpdate("update trainstatus set seats_in_ac='"+s+"'where train_no= '"+train_no.getText()+"'");
+                } 
+            }
+            if(sleeper.isSelected()){
+                 if(Integer.parseInt(currentSeatsInSleeper)<Integer.parseInt(seats.getText())&&act.equals("-")){
+                     JOptionPane.showMessageDialog(this , "Not enough seats to remove");
+                }
+                 else{
+                     int s=0;
+                     if(act.equals("-")){
+                        s=Integer.parseInt(currentSeatsInSleeper)-Integer.parseInt(this.seats.getText());
+                     }
+                      if(act.equals("+")){
+                        s=Integer.parseInt(currentSeatsInSleeper)+Integer.parseInt(this.seats.getText());
+                     } 
+                     st.executeUpdate("update trainstatus set seats_in_sleeper='"+s+"'where train_no= '"+train_no.getText()+"'");
+                 }
+            }
+            System.out.println("updated");
+            con.close();
+            
+        }catch (SQLException ex) {
+                Logger.getLogger(UpdateSeats.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
     }//GEN-LAST:event_updateActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void seatsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_seatsActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_seatsActionPerformed
 
-    private void train_no1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_train_no1ActionPerformed
+    private void train_noActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_train_noActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_train_no1ActionPerformed
+    }//GEN-LAST:event_train_noActionPerformed
 
     private void acActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acActionPerformed
         // TODO add your handling code here:
@@ -231,6 +320,26 @@ public class UpdateSeates extends javax.swing.JFrame {
     private void sleeperActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sleeperActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_sleeperActionPerformed
+
+    private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
+        // TODO add your handling code here:
+        if(add.isSelected()){
+            remove.setSelected(false);
+        }
+    }//GEN-LAST:event_addActionPerformed
+
+    private void removeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeActionPerformed
+        // TODO add your handling code here:
+         if(remove.isSelected()){
+            add.setSelected(false);
+        }
+    }//GEN-LAST:event_removeActionPerformed
+
+    private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
+        // TODO add your handling code here:
+        new Admin().setVisible(true);
+        this.hide();
+    }//GEN-LAST:event_backActionPerformed
 
     /**
      * @param args the command line arguments
@@ -249,20 +358,21 @@ public class UpdateSeates extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(UpdateSeates.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateSeats.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(UpdateSeates.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateSeats.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(UpdateSeates.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateSeats.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(UpdateSeates.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateSeats.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new UpdateSeates().setVisible(true);
+                new UpdateSeats().setVisible(true);
             }
         });
     }
@@ -278,11 +388,11 @@ public class UpdateSeates extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JCheckBox remove;
     private javax.swing.JLabel seates;
+    private javax.swing.JTextField seats;
     private javax.swing.JCheckBox sleeper;
-    private javax.swing.JTextField train_no1;
+    private javax.swing.JTextField train_no;
     private javax.swing.JButton update;
     // End of variables declaration//GEN-END:variables
 }
