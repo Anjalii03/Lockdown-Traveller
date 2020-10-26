@@ -1,10 +1,11 @@
-package Client;
+package Server;
 
 
-import static Client.Client.socket;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -16,16 +17,16 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author Ayushi Barua
+ * @author Priyanshi Dixit
  */
-public class LoginPage extends javax.swing.JFrame {
+public class AdminLoginPage extends javax.swing.JFrame {
 
     /**
-     * Creates new form loginframe
+     * Creates new form 
      */
-    public LoginPage() {
+    public AdminLoginPage() {
         initComponents();
-        setLocation(800,200);
+        setLocation(200,200);
        
     }
 
@@ -48,7 +49,6 @@ public class LoginPage extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         password = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
-        to_register = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(153, 255, 51));
@@ -57,7 +57,7 @@ public class LoginPage extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 153, 102));
 
         jLabel2.setFont(new java.awt.Font("Bodoni MT", 1, 36)); // NOI18N
-        jLabel2.setText("USER LOGIN ");
+        jLabel2.setText("ADMIN LOGIN ");
         jLabel2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.add(jLabel2);
 
@@ -101,14 +101,6 @@ public class LoginPage extends javax.swing.JFrame {
             }
         });
 
-        to_register.setText("Click here to create a new account");
-        to_register.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        to_register.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                to_registerMouseClicked(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -134,10 +126,7 @@ public class LoginPage extends javax.swing.JFrame {
                         .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(136, 136, 136)
-                        .addComponent(jButton1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(93, 93, 93)
-                        .addComponent(to_register)))
+                        .addComponent(jButton1)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -156,9 +145,7 @@ public class LoginPage extends javax.swing.JFrame {
                     .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(47, 47, 47)
                 .addComponent(jButton1)
-                .addGap(27, 27, 27)
-                .addComponent(to_register)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(72, Short.MAX_VALUE))
         );
 
         pack();
@@ -179,45 +166,37 @@ public class LoginPage extends javax.swing.JFrame {
         
     }//GEN-LAST:event_minMouseClicked
 
-    private void to_registerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_to_registerMouseClicked
-        RegisterationPage rgf=new RegisterationPage();
-        rgf.setVisible(true);
-        rgf.pack();
-        rgf.setLocationRelativeTo(null);
-        rgf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.dispose();
-        
-        
-        
-    }//GEN-LAST:event_to_registerMouseClicked
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-         if(username.getText().equals("")||password.getText().equals("")){
+        if(username.getText().equals("")||password.getText().equals("")){
             JOptionPane.showMessageDialog(this , "Blank not allowed" );}
          else{
-            try{ 
-            ObjectOutputStream objectOutputStream=new ObjectOutputStream(socket.getOutputStream());         
-            ObjectInputStream objectInputStream=new ObjectInputStream(socket.getInputStream());
-            objectOutputStream.writeInt(1);
-            objectOutputStream.flush();   
-            System.out.println("sending 1");
-            LoginRequest log=new LoginRequest(username.getText(),password.getText());
-            objectOutputStream.writeObject(log);
-            System.out.println("sending values");
-            objectOutputStream.flush();   
-            if(objectInputStream.readBoolean()){
-                HomePage u=new HomePage();
-                u.setVisible(true);
-                this.hide();
+        try{            
+            Connection con;
+	    Statement st;
+            con=DriverManager.getConnection("jdbc:mysql://localhost:3308/softablitz","root","");  //edit 3306 in your case
+            st=con.createStatement();
+            DatabaseManager dbm=new DatabaseManager();
+            dbm.setConnection();
+            String sql="Select username,password from Admin";      
+            ResultSet rs = st.executeQuery(sql);
+            boolean flag=false;
+            while(rs.next()) {
+                String datausername=rs.getString("username");
+                String datapassword=rs.getString("password");
+                if (datausername.equals(this.username.getText())&&datapassword.equals(this.password.getText())){  
+                    System.out.println("found in db "+datausername+" "+datapassword);
+                    this.hide();
+                    flag=true;
+                    new Admin().setVisible(true);
+                }
             }
-            else {
-                JOptionPane.showMessageDialog(this , "incorrect username or password!!" );
-             }
-            }catch(IOException e){
-            System.out.print(e+"button here");
-            }   
+            if(flag==false){
+               JOptionPane.showMessageDialog(this , "wrong username or password!!" );}
+        }catch(SQLException e){
+            System.out.println(e+"heres the error");
         }
+      }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -237,14 +216,16 @@ public class LoginPage extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LoginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminLoginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LoginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminLoginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LoginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminLoginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LoginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdminLoginPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
@@ -252,7 +233,7 @@ public class LoginPage extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new LoginPage().setVisible(true);
+                new AdminLoginPage().setVisible(true);
             }
         });
     }
@@ -267,7 +248,6 @@ public class LoginPage extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel min;
     private javax.swing.JPasswordField password;
-    private javax.swing.JLabel to_register;
     private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
 }

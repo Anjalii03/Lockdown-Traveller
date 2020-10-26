@@ -74,7 +74,7 @@ public class DatabaseManager {
             System.out.println(e);
         }
         return false;
-    }
+    }    
     public static void main(String[] args) {    
         
     } 

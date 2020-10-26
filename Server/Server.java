@@ -18,6 +18,7 @@ public class Server {
         } catch (IOException e) {
             System.out.println(e);
         }
+        new AdminLoginPage().setVisible(true);
         while (true) {
             try {
                 socket = serverSocket.accept();

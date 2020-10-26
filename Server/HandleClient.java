@@ -36,6 +36,7 @@ public class HandleClient implements Runnable {
                         objectOutputStream.writeBoolean(db.Checklogin(log));
                         objectOutputStream.flush();
                     break;
+                 
                     case 2 :
                          System.out.println("action in progress");
                         RegisterRequest reg = (RegisterRequest) objectInputStream.readObject();
@@ -44,6 +45,9 @@ public class HandleClient implements Runnable {
                         objectOutputStream.writeBoolean(db.Register(reg));
                         objectOutputStream.flush();
                         break;
+                        
+                    case 3 :
+                        
                 }
                 
                 System.out.println("closing connection");
