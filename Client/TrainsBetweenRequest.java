@@ -7,8 +7,11 @@ import java.io.Serializable;
  * @author Priyanshi dixit
  */
 public class TrainsBetweenRequest implements Serializable{
-    String source,destination,arrival,departure;
+    String source,destination,arrival,departure,Date;
     int train_no;
+    public String getDate(){
+        return Date;
+    }
     public String getSource(){
         return source;
     }
@@ -21,9 +24,10 @@ public class TrainsBetweenRequest implements Serializable{
     public int getTrain_no(){
         return train_no;
     }
-    public TrainsBetweenRequest (String source , String destination){
+    public TrainsBetweenRequest (String source , String destination,String Date){
         this.source=source;
         this.destination=destination;
+        this.Date=Date;
     }
      public String getArrival(){
         return arrival;
@@ -39,6 +43,6 @@ public class TrainsBetweenRequest implements Serializable{
     }
     @Override
     public String toString(){
-        return String.valueOf(source+" "+destination+" "+arrival+" "+departure+" "+train_no);
+        return String.valueOf(source+" "+destination+" date is "+Date+" "+arrival+" "+departure+" "+train_no);
     }
 }

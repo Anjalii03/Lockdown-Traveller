@@ -42,25 +42,6 @@ public class TrainDetails extends javax.swing.JFrame {
        arrival=new JLabel(arv);
        arrival.setBounds(300,265,100,50);
        panel.add(arrival);
-       //arrival and destination
-   /*    try{
-            ObjectOutputStream objectOutputStream=new ObjectOutputStream(socket.getOutputStream());         
-            ObjectInputStream objectInputStream=new ObjectInputStream(socket.getInputStream());
-            objectOutputStream.writeInt(4);
-            objectOutputStream.flush();   
-            System.out.println("sending 4");
-            TrainDetailsRequest tdr=new TrainDetailsRequest(sor,des);
-            objectOutputStream.writeObject(tdr);
-            System.out.println("sending values");
-            objectOutputStream.flush();   
-            System.out.println("before in ");
-            String details = (String) objectInputStream.readObject();
-            System.out.println("in in ");
-            System.out.println(details);
-          //  System.out.println(details.getDeparture());
-       }catch(Exception e){
-           System.out.println(e+" this is it");
-       } */
     }
 
     /**
@@ -126,7 +107,7 @@ public class TrainDetails extends javax.swing.JFrame {
         jLabel1.setText("No of Tickets");
 
         ticketno.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        ticketno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", " " }));
+        ticketno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4" }));
         ticketno.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ticketnoActionPerformed(evt);

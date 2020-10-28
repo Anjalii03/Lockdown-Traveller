@@ -103,22 +103,25 @@ public class DatabaseManager {
                         {
                             System.out.println("found in db "+datasource+" "+datadestination);
                             flag=true;
-                            
-//                            String tbData[] = {s_no,datasource,datadestination,departure,arrival};
-//                            
-//                            DefaultTableModel tblModel = (DefaultTableModel)Train.getAvailableTrainsTable().getModel();
-//                            tblModel.addRow(tbData);
-//                            return getAvailableTrainsTable();
                               ArrayList<String> list=new ArrayList<String>(); 
                               list.add(s_no);
                               list.add(datasource);
                               list.add(datadestination);
                               list.add(departure);
                               list.add(arrival);
-                              
-                              return list;
+                           
+                            String sql1="select seats_in_ac,seats_in_sleeper from availability where train_id ='"+d_id+"' and date='"+t.getDate()+"'";
+                            ResultSet r1 = st.executeQuery(sql1);
+                            while(r1.next()){
+                                String seats_ac=String.valueOf(r1.getInt("seats_in_ac"));
+                                String seats_sl=String.valueOf(r1.getInt("seats_in_sleeper"));
+                                list.add(seats_ac);
+                                list.add(seats_sl);
+                            }
+                        return list;
                         }
                     }
+                   
                 }
             }
              
@@ -129,7 +132,7 @@ public class DatabaseManager {
         }catch(SQLException e){
             System.out.println(e);
         }
-            return null;    
+        return null;    
     }
     public static void main(String[] args) {    
         

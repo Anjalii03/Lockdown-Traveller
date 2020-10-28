@@ -27,19 +27,20 @@ public class TrainsBetween extends javax.swing.JFrame {
         initComponents();
         setLocation(400,200);
         Calendar cal = Calendar.getInstance();
-        combo.addItem(cal.get(Calendar.DATE)+"/ "+cal.get(Calendar.MONTH)+"/ "+cal.get(Calendar.YEAR));
+        date.addItem(cal.get(Calendar.DATE)+"/ "+cal.get(Calendar.MONTH)+"/ "+cal.get(Calendar.YEAR));
         
          cal.add(Calendar.DATE, 1);
-         combo.addItem(cal.get(Calendar.DATE)+"/ "+cal.get(Calendar.MONTH)+"/ "+cal.get(Calendar.YEAR));
+         date.addItem(cal.get(Calendar.DATE)+"/ "+cal.get(Calendar.MONTH)+"/ "+cal.get(Calendar.YEAR));
         
          cal.add(Calendar.DATE, 1);
-          combo.addItem(cal.get(Calendar.DATE)+"/ "+cal.get(Calendar.MONTH)+"/ "+cal.get(Calendar.YEAR));
+          date.addItem(cal.get(Calendar.DATE)+"/ "+cal.get(Calendar.MONTH)+"/ "+cal.get(Calendar.YEAR));
           
          cal.add(Calendar.DATE, 1);
-            combo.addItem(cal.get(Calendar.DATE)+"/ "+cal.get(Calendar.MONTH)+"/ "+cal.get(Calendar.YEAR));
+            date.addItem(cal.get(Calendar.DATE)+"/ "+cal.get(Calendar.MONTH)+"/ "+cal.get(Calendar.YEAR));
         
          cal.add(Calendar.DATE, 1);
-            combo.addItem(cal.get(Calendar.DATE)+"/ "+cal.get(Calendar.MONTH)+"/ "+cal.get(Calendar.YEAR));
+            date.addItem(cal.get(Calendar.DATE)+"/ "+cal.get(Calendar.MONTH)+"/ "+cal.get(Calendar.YEAR));
+         
     }
 
     /**
@@ -58,7 +59,7 @@ public class TrainsBetween extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         destination = new javax.swing.JTextField();
         source = new javax.swing.JTextField();
-        combo = new javax.swing.JComboBox<>();
+        date = new javax.swing.JComboBox<>();
         head = new javax.swing.JLabel();
         process = new javax.swing.JButton();
         back = new javax.swing.JButton();
@@ -89,10 +90,10 @@ public class TrainsBetween extends javax.swing.JFrame {
             }
         });
 
-        combo.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        combo.addActionListener(new java.awt.event.ActionListener() {
+        date.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        date.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboActionPerformed(evt);
+                dateActionPerformed(evt);
             }
         });
 
@@ -111,7 +112,7 @@ public class TrainsBetween extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(destination, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(source, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(combo, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(63, 63, 63))
         );
         jPanel1Layout.setVerticalGroup(
@@ -129,7 +130,7 @@ public class TrainsBetween extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(combo, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(date, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(64, Short.MAX_VALUE))
         );
@@ -191,10 +192,10 @@ public class TrainsBetween extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void comboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboActionPerformed
+    private void dateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dateActionPerformed
         // TODO add your handling code here:
         
-    }//GEN-LAST:event_comboActionPerformed
+    }//GEN-LAST:event_dateActionPerformed
 
     private void sourceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sourceActionPerformed
         // TODO add your handling code here:
@@ -205,8 +206,12 @@ public class TrainsBetween extends javax.swing.JFrame {
     }//GEN-LAST:event_destinationActionPerformed
 
     private void processActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_processActionPerformed
-         if(source.getText().equals("")&&destination.getText().equals("")){
+        String Date= (String) date.getSelectedItem();
+        if(source.getText().equals("")&&destination.getText().equals("")){
             JOptionPane.showMessageDialog(this , "Blank not allowed" );
+        //    TrainDetails t = new TrainDetails("1234","delhi","mumbai","20:10","22:30");
+        //    t.setVisible(true);
+        //   this.hide();
              }        
         else{
             try{ 
@@ -216,12 +221,13 @@ public class TrainsBetween extends javax.swing.JFrame {
             System.out.println("sending 3 flush");
             objectOutputStream.flush();   
             System.out.println("sending 3");
-            TrainsBetweenRequest tb = new TrainsBetweenRequest(source.getText(),destination.getText());
+            TrainsBetweenRequest tb = new TrainsBetweenRequest(source.getText(),destination.getText(),Date);
             objectOutputStream.writeObject(tb);
             System.out.println("sending values");
             objectOutputStream.flush();   
                 try {
                     ArrayList list = (ArrayList)objectInputStream.readObject();
+                    
                     System.out.println(list);
                     if(list != null){  
                         TrainDetails t = new TrainDetails(list.get(0).toString(),list.get(1).toString(),list.get(2).toString(),list.get(3).toString(),list.get(4).toString());
@@ -283,7 +289,7 @@ public class TrainsBetween extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton back;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JComboBox<String> combo;
+    private javax.swing.JComboBox<String> date;
     private javax.swing.JTextField destination;
     private javax.swing.JLabel head;
     private javax.swing.JLabel jLabel1;
