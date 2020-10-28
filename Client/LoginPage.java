@@ -214,7 +214,7 @@ public class LoginPage extends javax.swing.JFrame {
             else {
                 JOptionPane.showMessageDialog(this , "incorrect username or password!!" );
              }
-            }catch(IOException e){
+            }catch(Exception e){
             System.out.print(e+"button here");
             }   
         }

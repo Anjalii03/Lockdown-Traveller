@@ -6,6 +6,7 @@ package Server;
 */
 import java.sql.*;
 import Client.*;
+import java.util.ArrayList;
 public class DatabaseManager {
 	private static Connection con;
 	private static Statement st;
@@ -75,6 +76,61 @@ public class DatabaseManager {
         }
         return false;
     }    
+    public ArrayList CheckTrains(TrainsBetweenRequest t) {
+    
+        try
+        {
+            String sql = "select source,train_id,train_no,departure from TrainStatus";
+            ResultSet rs = st.executeQuery(sql);
+            boolean flag=false;
+            while(rs.next()) {
+                String datasource = rs.getString("source");
+                String s_id = String.valueOf(rs.getInt("train_id"));
+                String s_no = String.valueOf(rs.getInt("train_no"));
+                String departure = rs.getString("departure");
+                if(datasource.equals(t.getSource()))
+                {
+                    String sq = "select destination,train_id,train_no,arrival from TrainStatus";
+                    ResultSet r = st.executeQuery(sq);
+                    while(r.next())
+                    {
+                        String datadestination = r.getString("destination");
+                        String d_id = String.valueOf(r.getInt("train_id"));
+                        String d_no = String.valueOf(r.getInt("train_no"));
+                        String arrival = r.getString("arrival");
+                        
+                        if(datadestination.equals(t.getDestination()) && s_no.equals(d_no) && (s_id.compareTo(d_id) <= 0))
+                        {
+                            System.out.println("found in db "+datasource+" "+datadestination);
+                            flag=true;
+                            
+//                            String tbData[] = {s_no,datasource,datadestination,departure,arrival};
+//                            
+//                            DefaultTableModel tblModel = (DefaultTableModel)Train.getAvailableTrainsTable().getModel();
+//                            tblModel.addRow(tbData);
+//                            return getAvailableTrainsTable();
+                              ArrayList<String> list=new ArrayList<String>(); 
+                              list.add(s_no);
+                              list.add(datasource);
+                              list.add(datadestination);
+                              list.add(departure);
+                              list.add(arrival);
+                              
+                              return list;
+                        }
+                    }
+                }
+            }
+             
+            if(flag==false){
+                System.out.println("not found");    
+            }
+            
+        }catch(SQLException e){
+            System.out.println(e);
+        }
+            return null;    
+    }
     public static void main(String[] args) {    
         
     } 

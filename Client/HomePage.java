@@ -140,8 +140,8 @@ public class HomePage extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        close();
-       //TrainsBetween tb = new TrainsBetween();
-       //tb.setVisible(true);
+       TrainsBetween tb = new TrainsBetween();
+       tb.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed

@@ -38,25 +38,30 @@ public class HandleClient implements Runnable {
                     break;
                  
                     case 2 :
-                         System.out.println("action in progress");
+                        System.out.println("action in progress");
                         RegisterRequest reg = (RegisterRequest) objectInputStream.readObject();
                         System.out.println("Message received");
                         System.out.println(reg);
                         objectOutputStream.writeBoolean(db.Register(reg));
                         objectOutputStream.flush();
                         break;
-                        
                     case 3 :
-                        
+                        System.out.println("action in progress");
+                        TrainsBetweenRequest tb = (TrainsBetweenRequest) objectInputStream.readObject();
+                        System.out.println("Message received");
+                        System.out.println(tb);
+                        objectOutputStream.writeObject(db.CheckTrains(tb));
+                        objectOutputStream.flush();
+                        break;
                 }
                 
                 System.out.println("closing connection");
                 db.CloseConnection();
                 
-            }catch(IOException | ClassNotFoundException e){
+            }catch(Exception e){
                 System.out.println(e+" here all the errors");
                 break;
-            }
+            } 
         }
 
     }
