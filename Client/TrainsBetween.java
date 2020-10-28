@@ -11,6 +11,8 @@ import javax.swing.JOptionPane;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -26,21 +28,25 @@ public class TrainsBetween extends javax.swing.JFrame {
         
         initComponents();
         setLocation(400,200);
+        String dateTo=java.time.LocalDate.now().toString();
+        date.addItem(dateTo);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Calendar cal = Calendar.getInstance();
-        date.addItem(cal.get(Calendar.DATE)+"/ "+cal.get(Calendar.MONTH)+"/ "+cal.get(Calendar.YEAR));
-        
-         cal.add(Calendar.DATE, 1);
-         date.addItem(cal.get(Calendar.DATE)+"/ "+cal.get(Calendar.MONTH)+"/ "+cal.get(Calendar.YEAR));
-        
-         cal.add(Calendar.DATE, 1);
-          date.addItem(cal.get(Calendar.DATE)+"/ "+cal.get(Calendar.MONTH)+"/ "+cal.get(Calendar.YEAR));
-          
-         cal.add(Calendar.DATE, 1);
-            date.addItem(cal.get(Calendar.DATE)+"/ "+cal.get(Calendar.MONTH)+"/ "+cal.get(Calendar.YEAR));
-        
-         cal.add(Calendar.DATE, 1);
-            date.addItem(cal.get(Calendar.DATE)+"/ "+cal.get(Calendar.MONTH)+"/ "+cal.get(Calendar.YEAR));
-         
+        try{
+	   cal.setTime(sdf.parse(dateTo));
+	}catch(ParseException e){
+	   e.printStackTrace();
+	}
+        cal.add(Calendar.DAY_OF_MONTH, 1);  
+	date.addItem(sdf.format(cal.getTime()));  
+        cal.add(Calendar.DAY_OF_MONTH, 1);  
+	date.addItem(sdf.format(cal.getTime()));  
+        cal.add(Calendar.DAY_OF_MONTH, 1);  
+	date.addItem(sdf.format(cal.getTime()));  
+        cal.add(Calendar.DAY_OF_MONTH, 1);  
+	date.addItem(sdf.format(cal.getTime()));  
+        cal.add(Calendar.DAY_OF_MONTH, 1);  
+	date.addItem(sdf.format(cal.getTime()));  
     }
 
     /**
@@ -209,9 +215,6 @@ public class TrainsBetween extends javax.swing.JFrame {
         String Date= (String) date.getSelectedItem();
         if(source.getText().equals("")&&destination.getText().equals("")){
             JOptionPane.showMessageDialog(this , "Blank not allowed" );
-        //    TrainDetails t = new TrainDetails("1234","delhi","mumbai","20:10","22:30");
-        //    t.setVisible(true);
-        //   this.hide();
              }        
         else{
             try{ 
@@ -224,13 +227,14 @@ public class TrainsBetween extends javax.swing.JFrame {
             TrainsBetweenRequest tb = new TrainsBetweenRequest(source.getText(),destination.getText(),Date);
             objectOutputStream.writeObject(tb);
             System.out.println("sending values");
+            System.out.println(" date is "+Date);
             objectOutputStream.flush();   
                 try {
                     ArrayList list = (ArrayList)objectInputStream.readObject();
                     
                     System.out.println(list);
                     if(list != null){  
-                        TrainDetails t = new TrainDetails(list.get(0).toString(),list.get(1).toString(),list.get(2).toString(),list.get(3).toString(),list.get(4).toString());
+                        TrainDetails t = new TrainDetails(list.get(0).toString(),list.get(1).toString(),list.get(2).toString(),list.get(3).toString(),list.get(4).toString(),list.get(5).toString(),list.get(6).toString(),list.get(7).toString(),list.get(8).toString());
                         t.setVisible(true);
                         this.hide();
                     }

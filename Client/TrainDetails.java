@@ -17,9 +17,13 @@ public class TrainDetails extends javax.swing.JFrame {
      * @param Train_no
      * @param Departure
      * @param Arrival
+     * @param acSeat
+     * @param SleeperSeat
+     * @param acCost
+     * @param slCost
      */
     
-    public TrainDetails(String Train_no,String Source,String Destination,String Departure,String Arrival) {
+    public TrainDetails(String Train_no,String Source,String Destination,String Departure,String Arrival,String acSeat,String SleeperSeat,String acfare,String slfare) {
        initComponents();
        setLocation(250,150);
        String Trainno=String.valueOf(Train_no);
@@ -34,6 +38,21 @@ public class TrainDetails extends javax.swing.JFrame {
        destination=new JLabel(des);
        destination.setBounds(300,65,100,50);
        panel.add(destination);
+       
+       ac_seats=new JLabel(acSeat);
+       ac_seats.setBounds(300,95,100,50);
+       panel.add(ac_seats);
+       
+       slpSeats=new JLabel(SleeperSeat);
+       slpSeats.setBounds(300,130,100,50);
+       panel.add(slpSeats);
+       
+       acCost=new JLabel(acfare);
+       acCost.setBounds(300,165,100,50);
+       panel.add(acCost);
+       slCost=new JLabel(slfare);
+       slCost.setBounds(300,200,100,50);
+       panel.add(slCost);
        String dep=String.valueOf(Departure);
        departure=new JLabel(dep);
        departure.setBounds(300,235,100,50);
@@ -56,10 +75,9 @@ public class TrainDetails extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        head = new javax.swing.JLabel();
         panel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        ticketno = new javax.swing.JComboBox<>();
+        pasg = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -67,7 +85,7 @@ public class TrainDetails extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jComboBox4 = new javax.swing.JComboBox<>();
+        coach = new javax.swing.JComboBox<>();
         jLabel17 = new javax.swing.JLabel();
         train_no = new javax.swing.JLabel();
         source = new javax.swing.JLabel();
@@ -77,6 +95,12 @@ public class TrainDetails extends javax.swing.JFrame {
         Arrival = new javax.swing.JLabel();
         departure = new javax.swing.JLabel();
         arrival = new javax.swing.JLabel();
+        ac_seats = new javax.swing.JLabel();
+        slpSeats = new javax.swing.JLabel();
+        acCost = new javax.swing.JLabel();
+        slCost = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        head = new javax.swing.JLabel();
 
         jLabel18.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel18.setText("Sleeper fare");
@@ -97,20 +121,16 @@ public class TrainDetails extends javax.swing.JFrame {
             }
         });
 
-        head.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 24)); // NOI18N
-        head.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        head.setText("Train Details");
-
         panel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel1.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel1.setText("No of Tickets");
 
-        ticketno.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        ticketno.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4" }));
-        ticketno.addActionListener(new java.awt.event.ActionListener() {
+        pasg.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        pasg.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4" }));
+        pasg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ticketnoActionPerformed(evt);
+                pasgActionPerformed(evt);
             }
         });
 
@@ -135,10 +155,10 @@ public class TrainDetails extends javax.swing.JFrame {
         jLabel16.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         jLabel16.setText("Sleeper fare");
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AC", "Sleeper" }));
-        jComboBox4.addActionListener(new java.awt.event.ActionListener() {
+        coach.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "AC", "Sleeper" }));
+        coach.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox4ActionPerformed(evt);
+                coachActionPerformed(evt);
             }
         });
 
@@ -159,22 +179,18 @@ public class TrainDetails extends javax.swing.JFrame {
                 .addGap(34, 34, 34)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelLayout.createSequentialGroup()
+                        .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(arrival)
+                        .addGap(61, 61, 61))
+                    .addGroup(panelLayout.createSequentialGroup()
                         .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(panelLayout.createSequentialGroup()
-                                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(destination))
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelLayout.createSequentialGroup()
-                                    .addGap(242, 242, 242)
-                                    .addComponent(source)))
                             .addGroup(panelLayout.createSequentialGroup()
                                 .addGap(165, 165, 165)
                                 .addComponent(train_no))
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -190,14 +206,32 @@ public class TrainDetails extends javax.swing.JFrame {
                                         .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGap(64, 64, 64)
                                     .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jComboBox4, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(ticketno, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                        .addContainerGap(101, Short.MAX_VALUE))
+                                        .addComponent(coach, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(pasg, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addGroup(panelLayout.createSequentialGroup()
+                                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(panelLayout.createSequentialGroup()
+                                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(destination))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, panelLayout.createSequentialGroup()
+                                        .addGap(242, 242, 242)
+                                        .addComponent(source)))
+                                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(panelLayout.createSequentialGroup()
+                                        .addGap(45, 45, 45)
+                                        .addComponent(ac_seats))
+                                    .addGroup(panelLayout.createSequentialGroup()
+                                        .addGap(33, 33, 33)
+                                        .addComponent(acCost)))))
+                        .addContainerGap(73, Short.MAX_VALUE))
                     .addGroup(panelLayout.createSequentialGroup()
-                        .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(arrival)
-                        .addGap(61, 61, 61))))
+                        .addComponent(slCost)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(slpSeats)
+                        .addGap(91, 91, 91))))
         );
         panelLayout.setVerticalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,25 +242,34 @@ public class TrainDetails extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
                 .addComponent(train_no)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(source)
-                    .addComponent(jLabel4))
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelLayout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(destination))
-                    .addGroup(panelLayout.createSequentialGroup()
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(source)
+                            .addComponent(jLabel4))
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel13))
+                            .addGroup(panelLayout.createSequentialGroup()
+                                .addGap(9, 9, 9)
+                                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(acCost)
+                                    .addComponent(destination))))
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel13)))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel14)
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel14)
+                            .addComponent(slpSeats)
+                            .addComponent(slCost)))
+                    .addGroup(panelLayout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(ac_seats)))
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelLayout.createSequentialGroup()
                         .addGap(126, 126, 126)
-                        .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(coach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jLabel16)
@@ -244,41 +287,59 @@ public class TrainDetails extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(ticketno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pasg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32))
+        );
+
+        jPanel1.setBackground(new java.awt.Color(102, 0, 102));
+
+        head.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 24)); // NOI18N
+        head.setForeground(new java.awt.Color(255, 255, 255));
+        head.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        head.setText("Train Details");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(head, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(132, 132, 132))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(22, Short.MAX_VALUE)
+                .addComponent(head)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(58, 58, 58)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(78, 78, 78))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(40, 40, 40)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(146, 146, 146)
-                        .addComponent(head, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(59, Short.MAX_VALUE))
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(214, 214, 214)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(head)
-                .addGap(15, 15, 15)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(jButton2)
+                    .addComponent(jButton1))
                 .addContainerGap())
         );
 
@@ -287,26 +348,29 @@ public class TrainDetails extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        //MyTicket t= new MyTicket();
+        String ac_sl= (String) coach.getSelectedItem();
+        String passg= (String) pasg.getSelectedItem();
+       // Integer.parseInt(passg);
+        new Booking(Integer.parseInt(passg)).setVisible(true);
         this.hide();
-        //t.setVisible(true);
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        //TrainsBetween tb = new TrainsBetween();
+        TrainsBetween tb = new TrainsBetween();
         this.hide();
-        //tb.setVisible(true);
+        tb.setVisible(true);
         
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void ticketnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ticketnoActionPerformed
+    private void pasgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pasgActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ticketnoActionPerformed
+    }//GEN-LAST:event_pasgActionPerformed
 
-    private void jComboBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox4ActionPerformed
+    private void coachActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coachActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox4ActionPerformed
+    }//GEN-LAST:event_coachActionPerformed
 
     /**
      * @param args the command line arguments
@@ -338,20 +402,22 @@ public class TrainDetails extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TrainDetails("909090909","kanpur","allahabad","20:20","20:20").setVisible(true);
+                new TrainDetails("909090909","kanpur","allahabad","20:20","20:20","30","30","1000","700").setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Arrival;
+    private javax.swing.JLabel acCost;
+    private javax.swing.JLabel ac_seats;
     private javax.swing.JLabel arrival;
+    private javax.swing.JComboBox<String> coach;
     private javax.swing.JLabel departure;
     private javax.swing.JLabel destination;
     private javax.swing.JLabel head;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -364,9 +430,12 @@ public class TrainDetails extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel panel;
+    private javax.swing.JComboBox<String> pasg;
+    private javax.swing.JLabel slCost;
+    private javax.swing.JLabel slpSeats;
     private javax.swing.JLabel source;
-    private javax.swing.JComboBox<String> ticketno;
     private javax.swing.JLabel train_no;
     // End of variables declaration//GEN-END:variables
 }

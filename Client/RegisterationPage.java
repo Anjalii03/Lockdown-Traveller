@@ -410,8 +410,8 @@ public class RegisterationPage extends javax.swing.JFrame {
       //  }
          else{
              try{
-                  ObjectOutputStream objectOutputStream=new ObjectOutputStream(socket.getOutputStream());         
-                  ObjectInputStream objectInputStream=new ObjectInputStream(socket.getInputStream());
+                ObjectOutputStream objectOutputStream=new ObjectOutputStream(socket.getOutputStream());         
+                ObjectInputStream objectInputStream=new ObjectInputStream(socket.getInputStream());
                 objectOutputStream.writeInt(2);
                 objectOutputStream.flush();   
                 System.out.println("sending 2");
