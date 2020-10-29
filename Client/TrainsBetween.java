@@ -5,6 +5,8 @@
  */
 package Client;
 import static Client.Client.socket;
+import java.awt.Color;
+import java.awt.Font;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
 
@@ -14,6 +16,7 @@ import java.io.ObjectOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import javax.swing.JLabel;
 
 /**
  *
@@ -23,11 +26,19 @@ public class TrainsBetween extends javax.swing.JFrame {
 
     /**
      * Creates new form TrainsBetween
+     * @param usnm
      */
-    public TrainsBetween() {
+    String usnm;
+    public TrainsBetween(String usnm) {
         
         initComponents();
         setLocation(400,200);
+        this.usnm=usnm;
+        JLabel user=new JLabel(usnm);
+       user.setFont(new Font("Times new roman", Font.BOLD,18));
+       user.setForeground(Color.white);
+       user.setBounds(500,10,100,50);
+       Panel.add(user);
         String dateTo=java.time.LocalDate.now().toString();
         date.addItem(dateTo);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -66,9 +77,10 @@ public class TrainsBetween extends javax.swing.JFrame {
         destination = new javax.swing.JTextField();
         source = new javax.swing.JTextField();
         date = new javax.swing.JComboBox<>();
-        head = new javax.swing.JLabel();
         process = new javax.swing.JButton();
         back = new javax.swing.JButton();
+        Panel = new javax.swing.JPanel();
+        head = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -141,11 +153,6 @@ public class TrainsBetween extends javax.swing.JFrame {
                 .addContainerGap(64, Short.MAX_VALUE))
         );
 
-        head.setFont(new java.awt.Font("Arial Rounded MT Bold", 3, 24)); // NOI18N
-        head.setForeground(new java.awt.Color(59, 35, 23));
-        head.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        head.setText("Search Your Train ");
-
         process.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         process.setText("Process");
         process.addActionListener(new java.awt.event.ActionListener() {
@@ -161,38 +168,54 @@ public class TrainsBetween extends javax.swing.JFrame {
             }
         });
 
+        Panel.setBackground(new java.awt.Color(0, 153, 204));
+
+        head.setFont(new java.awt.Font("Times New Roman", 3, 24)); // NOI18N
+        head.setForeground(new java.awt.Color(59, 35, 23));
+        head.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        head.setText("Search Your Train ");
+
+        javax.swing.GroupLayout PanelLayout = new javax.swing.GroupLayout(Panel);
+        Panel.setLayout(PanelLayout);
+        PanelLayout.setHorizontalGroup(
+            PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(head, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        PanelLayout.setVerticalGroup(
+            PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(head, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(Panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(158, 158, 158)
-                        .addComponent(head, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(39, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(86, 86, 86)
+                .addGap(30, 30, 30)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(43, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(76, 76, 76)
                 .addComponent(back, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(process, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62))
+                .addGap(61, 61, 61))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(head, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(process)
-                    .addComponent(back, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(32, Short.MAX_VALUE))
+                    .addComponent(back, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(process))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         pack();
@@ -234,7 +257,7 @@ public class TrainsBetween extends javax.swing.JFrame {
                     
                     System.out.println(list);
                     if(list != null){  
-                        TrainDetails t = new TrainDetails(list.get(0).toString(),list.get(1).toString(),list.get(2).toString(),list.get(3).toString(),list.get(4).toString(),list.get(5).toString(),list.get(6).toString(),list.get(7).toString(),list.get(8).toString());
+                        TrainDetails t = new TrainDetails(usnm,Date,list.get(0).toString(),list.get(1).toString(),list.get(2).toString(),list.get(3).toString(),list.get(4).toString(),list.get(5).toString(),list.get(6).toString(),list.get(7).toString(),list.get(8).toString());
                         t.setVisible(true);
                         this.hide();
                     }
@@ -251,6 +274,8 @@ public class TrainsBetween extends javax.swing.JFrame {
 
     private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
         // TODO add your handling code here:
+        this.hide();
+        new HomePage(usnm).setVisible(true);
     }//GEN-LAST:event_backActionPerformed
 
     /**
@@ -284,13 +309,14 @@ public class TrainsBetween extends javax.swing.JFrame {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TrainsBetween().setVisible(true);
+                new TrainsBetween("xyz123").setVisible(true);
                 
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel Panel;
     private javax.swing.JButton back;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> date;

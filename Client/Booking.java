@@ -19,13 +19,16 @@ public class Booking extends javax.swing.JFrame {
      */  
     JTextField[][] Field = new JTextField[22][22];
     JComboBox[]combo = new JComboBox[4];
-    
+    TicketRequest Tr=new TicketRequest(null,null,null,null,null,null,null,null,null,null);
     int P;
-    public Booking(int psg) {
+    String usnm;
+    public Booking(String usnm,int psg,TicketRequest tr) {
         initComponents();
         setLocation(400,150);
         P=psg;
-        int x = 20;
+        this.usnm=usnm;
+        Tr=tr;
+        int x ;
         int y = 40;
         for(int i = 0; i<psg; i++){
         
@@ -88,6 +91,9 @@ public class Booking extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        process.setBackground(new java.awt.Color(0, 0, 51));
+        process.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        process.setForeground(new java.awt.Color(255, 255, 255));
         process.setText("Add and generate Ticket");
         process.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -111,33 +117,40 @@ public class Booking extends javax.swing.JFrame {
         PanelLayout.setHorizontalGroup(
             PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(jLabel2)
-                .addGap(176, 176, 176)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 172, Short.MAX_VALUE)
-                .addComponent(jLabel4)
-                .addGap(147, 147, 147))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelLayout.createSequentialGroup()
-                .addGap(85, 85, 85)
-                .addComponent(back)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(process, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(56, 56, 56))
+                .addGroup(PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PanelLayout.createSequentialGroup()
+                        .addGap(85, 85, 85)
+                        .addComponent(back))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PanelLayout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addComponent(jLabel2)
+                        .addGap(176, 176, 176)
+                        .addComponent(jLabel3)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                .addGroup(PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelLayout.createSequentialGroup()
+                        .addComponent(process, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(73, 73, 73))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelLayout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(130, 130, 130))))
         );
         PanelLayout.setVerticalGroup(
             PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2)
-                        .addComponent(jLabel3)))
-                .addGap(228, 228, 228)
                 .addGroup(PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(process)
-                    .addComponent(back))
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelLayout.createSequentialGroup()
+                        .addGap(228, 228, 228)
+                        .addComponent(back))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelLayout.createSequentialGroup()
+                        .addGap(219, 219, 219)
+                        .addComponent(process, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(25, 25, 25))
         );
 
@@ -162,6 +175,12 @@ public class Booking extends javax.swing.JFrame {
     private void processActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_processActionPerformed
         // TODO add your handling code here:
         for(int i=0;i<P;i++){
+            if(this.Field[i][0].getText().equals("")||this.Field[i][1].getText().equals("")){
+                JOptionPane.showMessageDialog(this , "Blank not allowed" );
+            //   new Ticket(usnm,Tr).setVisible(true);
+            //   this.hide();
+            }
+            else{
             String name=this.Field[i][0].getText();
             String age=this.Field[i][1].getText();
             String gender=(String) combo[i].getSelectedItem();
@@ -176,12 +195,32 @@ public class Booking extends javax.swing.JFrame {
                 System.out.println("sending values");
                 objectOutputStream.flush();   
                 if(objectInputStream.readBoolean()){
-                   System.out.println("added successfully!");
+                System.out.println("added successfully!");
                 }
             }catch(Exception e){
                 e.printStackTrace();
             }
+            }
         }
+        SeatsConfirmation sc=new SeatsConfirmation(Tr.getTrain_no(),Tr.getSource(),Tr.getDestination(),Tr.getDate(),Tr.getPassg(),Tr.getCoach());
+        try{
+            ObjectOutputStream objectOutputStream=new ObjectOutputStream(socket.getOutputStream());         
+            ObjectInputStream objectInputStream=new ObjectInputStream(socket.getInputStream());
+            objectOutputStream.writeInt(5);
+            objectOutputStream.flush();   
+            System.out.println("sending 5");
+            objectOutputStream.writeObject(sc);
+            System.out.println("sending values");
+            objectOutputStream.flush();  
+            if(objectInputStream.readBoolean()){
+                System.out.println("Seats Sucessfully alloted to u");
+            }
+                
+        }catch(Exception e){
+        e.printStackTrace();
+    }
+        new Ticket(usnm,Tr).setVisible(true);
+        this.hide();
     }//GEN-LAST:event_processActionPerformed
 
     /**
@@ -214,7 +253,7 @@ public class Booking extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Booking(4).setVisible(true);
+                new Booking("xyz23",4,null).setVisible(true);
             }
         });
     }

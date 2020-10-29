@@ -12,11 +12,11 @@ import java.io.Serializable;
  * @author Priyanshi Dixit
  */
 public class TicketRequest implements Serializable{
-    String coach,arrival,departure,source,destination,passg,fare,date,train_no;
+    String coach,arrival,departure,source,destination,passg,fare,date,train_no,NoOfSeats;
     public String getArrival(){
         return arrival;
     }
-    public String getCoach(){
+    public String getCoach(){          //ac or sleeper
         return coach;
     }
     public String getDeparture(){
@@ -28,7 +28,7 @@ public class TicketRequest implements Serializable{
     public String getDestination(){
         return destination;
     }
-    public String getPaggg(){
+    public String getPassg(){
         return passg;
     }
     public String getFare(){
@@ -40,8 +40,11 @@ public class TicketRequest implements Serializable{
     public String getTrain_no(){
         return train_no;
     }
+    public String getNoOfSeats(){
+        return NoOfSeats;
+    }
     public TicketRequest(String coach,String arrival,String departure,String source,
-            String destination,String passg,String fare,String date,String train_no)
+            String destination,String passg,String fare,String date,String train_no,String NoOfSeats)
     {
         this.coach=coach;
         this.arrival=arrival;
@@ -52,6 +55,6 @@ public class TicketRequest implements Serializable{
         this.fare=fare;
         this.date=date;
         this.train_no=train_no;
-        
+        this.NoOfSeats=NoOfSeats;
     }
 }

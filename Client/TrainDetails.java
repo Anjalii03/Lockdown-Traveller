@@ -5,6 +5,8 @@ package Client;
  * @author Priyanshi Dixit
  */
 import static Client.Client.socket;
+import java.awt.Color;
+import java.awt.Font;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import javax.swing.*;
@@ -20,44 +22,67 @@ public class TrainDetails extends javax.swing.JFrame {
      * @param acSeat
      * @param SleeperSeat
      * @param acCost
+     * @param date
      * @param slCost
      */
-    
-    public TrainDetails(String Train_no,String Source,String Destination,String Departure,String Arrival,String acSeat,String SleeperSeat,String acfare,String slfare) {
+     String Trainno;
+     String sor;
+     String des,Seatsac,SeatsSl,fareAC,fareSL,Date;
+     String dep;
+     String arv;
+     String user;
+    public TrainDetails(String usnm,String date,String Train_no,String Source,String Destination,String Departure,String Arrival,String acSeat,String SleeperSeat,String acfare,String slfare) {
        initComponents();
-       setLocation(250,150);
-       String Trainno=String.valueOf(Train_no);
+       setLocation(400,100);
+       this.user=usnm;
+       JLabel user=new JLabel(usnm);
+       user.setFont(new Font("Times new roman", Font.BOLD,14));
+       user.setForeground(Color.white);
+       user.setBounds(450,5,100,50);
+       Panel1.add(user);
+       
+       Date=String.valueOf(date);
+       Trainno=String.valueOf(Train_no);
        train_no=new JLabel(Trainno);
        train_no.setBounds(300,5,100,50);
        panel.add(train_no);
-       String sor=String.valueOf(Source);
+       
+       sor=String.valueOf(Source);
        source=new JLabel(sor);
        source.setBounds(300,35,100,50);
        panel.add(source);
-       String des=String.valueOf(Destination);
+       
+       des=String.valueOf(Destination);
        destination=new JLabel(des);
        destination.setBounds(300,65,100,50);
        panel.add(destination);
        
+       Seatsac=String.valueOf(acSeat);
        ac_seats=new JLabel(acSeat);
        ac_seats.setBounds(300,95,100,50);
        panel.add(ac_seats);
        
+       SeatsSl=String.valueOf(SleeperSeat);
        slpSeats=new JLabel(SleeperSeat);
        slpSeats.setBounds(300,130,100,50);
        panel.add(slpSeats);
        
+       fareAC=String.valueOf(acfare);
        acCost=new JLabel(acfare);
        acCost.setBounds(300,165,100,50);
        panel.add(acCost);
+       
+       fareSL=String.valueOf(slfare);
        slCost=new JLabel(slfare);
        slCost.setBounds(300,200,100,50);
        panel.add(slCost);
-       String dep=String.valueOf(Departure);
+       
+       dep=String.valueOf(Departure);
        departure=new JLabel(dep);
        departure.setBounds(300,235,100,50);
        panel.add(departure);
-       String arv=String.valueOf(Arrival);
+       
+       arv=String.valueOf(Arrival);
        arrival=new JLabel(arv);
        arrival.setBounds(300,265,100,50);
        panel.add(arrival);
@@ -99,7 +124,7 @@ public class TrainDetails extends javax.swing.JFrame {
         slpSeats = new javax.swing.JLabel();
         acCost = new javax.swing.JLabel();
         slCost = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
+        Panel1 = new javax.swing.JPanel();
         head = new javax.swing.JLabel();
 
         jLabel18.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
@@ -291,25 +316,25 @@ public class TrainDetails extends javax.swing.JFrame {
                 .addGap(32, 32, 32))
         );
 
-        jPanel1.setBackground(new java.awt.Color(102, 0, 102));
+        Panel1.setBackground(new java.awt.Color(102, 0, 102));
 
         head.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 24)); // NOI18N
         head.setForeground(new java.awt.Color(255, 255, 255));
         head.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         head.setText("Train Details");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout Panel1Layout = new javax.swing.GroupLayout(Panel1);
+        Panel1.setLayout(Panel1Layout);
+        Panel1Layout.setHorizontalGroup(
+            Panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(head, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(132, 132, 132))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        Panel1Layout.setVerticalGroup(
+            Panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel1Layout.createSequentialGroup()
                 .addContainerGap(22, Short.MAX_VALUE)
                 .addComponent(head)
                 .addContainerGap())
@@ -319,7 +344,7 @@ public class TrainDetails extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(Panel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -333,7 +358,7 @@ public class TrainDetails extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(Panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -350,15 +375,33 @@ public class TrainDetails extends javax.swing.JFrame {
         // TODO add your handling code here:
         String ac_sl= (String) coach.getSelectedItem();
         String passg= (String) pasg.getSelectedItem();
+        int fare;
+        String Seats;
+        if(ac_sl.equals("AC")){
+            fare=Integer.parseInt(fareAC)*Integer.parseInt(passg);
+            Seats=Seatsac;
+        }
+        else{
+             fare=Integer.parseInt(fareSL)*Integer.parseInt(passg);
+             Seats=SeatsSl;
+        }
        // Integer.parseInt(passg);
-        new Booking(Integer.parseInt(passg)).setVisible(true);
+      //  String coach,String arrival,String departure,String source,
+     //   String destination,String passg,String fare,String date,String train_no
+     /* String Trainno;
+     String sor;
+     String des,Seatsac,SeatsSl,fareAC,fareSL;
+     String dep;
+     String arv;*/
+        TicketRequest tr=new TicketRequest(ac_sl,arv,dep,sor,des,passg,String.valueOf(fare),Date,Trainno,Seats);
+        new Booking(user,Integer.parseInt(passg),tr).setVisible(true);
         this.hide();
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        TrainsBetween tb = new TrainsBetween();
+        TrainsBetween tb = new TrainsBetween(user);
         this.hide();
         tb.setVisible(true);
         
@@ -402,13 +445,14 @@ public class TrainDetails extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TrainDetails("909090909","kanpur","allahabad","20:20","20:20","30","30","1000","700").setVisible(true);
+                new TrainDetails("xyx123","2020-08-28","909090909","kanpur","allahabad","20:20","20:20","30","30","1000","700").setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Arrival;
+    private javax.swing.JPanel Panel1;
     private javax.swing.JLabel acCost;
     private javax.swing.JLabel ac_seats;
     private javax.swing.JLabel arrival;
@@ -430,7 +474,6 @@ public class TrainDetails extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel panel;
     private javax.swing.JComboBox<String> pasg;
     private javax.swing.JLabel slCost;

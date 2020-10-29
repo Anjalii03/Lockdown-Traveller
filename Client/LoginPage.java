@@ -207,7 +207,7 @@ public class LoginPage extends javax.swing.JFrame {
             System.out.println("sending values");
             objectOutputStream.flush();   
             if(objectInputStream.readBoolean()){
-                HomePage u=new HomePage();
+                HomePage u=new HomePage(username.getText());
                 u.setVisible(true);
                 this.hide();
             }

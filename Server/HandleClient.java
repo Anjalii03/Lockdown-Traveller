@@ -61,6 +61,14 @@ public class HandleClient implements Runnable {
                         objectOutputStream.writeBoolean(db.addPassenger(br));
                         objectOutputStream.flush();
                         break;    
+                    case 5 :
+                        System.out.println("action in progress");
+                        SeatsConfirmation cs = (SeatsConfirmation) objectInputStream.readObject();
+                        System.out.println("Message received");
+                        System.out.println(cs);
+                        objectOutputStream.writeBoolean(db.ConfirmSeats(cs));
+                        objectOutputStream.flush();
+                        break;    
                 }
                 
                 System.out.println("closing connection");

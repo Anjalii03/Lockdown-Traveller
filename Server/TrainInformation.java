@@ -45,9 +45,8 @@ public class TrainInformation extends javax.swing.JFrame {
                 String kilometers = String.valueOf(rs.getInt("kilometers"));
                 String departure = rs.getString("departure");
                 String arrival = rs.getString("arrival");
-                String seats_in_ac = String.valueOf(rs.getInt("seats_in_ac"));
-                String seats_in_sleeper = String.valueOf(rs.getInt("seats_in_sleeper"));
-                String tbData[] = {train_id, train_no, source, destination, kilometers, departure, arrival, seats_in_ac, seats_in_sleeper};
+                
+                String tbData[] = {train_id, train_no, source, destination, kilometers, departure, arrival};
                 DefaultTableModel tblModel = (DefaultTableModel)jTable1.getModel();
                 tblModel.addRow(tbData);
             }
@@ -79,17 +78,18 @@ public class TrainInformation extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jTable1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jTable1.setBackground(new java.awt.Color(204, 204, 255));
+        jTable1.setFont(new java.awt.Font("Times New Roman", 0, 16)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Train Id", "Train No.", "Source", "Destination", "Kilometers", "Departure", "Arrival", "Seats in AC", "Seats in Sleeper"
+                "Train Id", "Train No.", "Source", "Destination", "Kilometers", "Departure", "Arrival"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -147,9 +147,9 @@ public class TrainInformation extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

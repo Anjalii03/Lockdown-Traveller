@@ -176,7 +176,7 @@ public class DatabaseManager {
     }
     public boolean addPassenger(BookingRequest br){
         try{
-             PreparedStatement ps = con.prepareStatement("INSERT INTO passengers (name,age,gender,status) "
+            PreparedStatement ps = con.prepareStatement("INSERT INTO passengers (name,age,gender,status) "
                       + "values(?,?,?,?) ");
 		ps.setString(1, br.getName());
 		ps.setString(2, br.getAge());
@@ -184,6 +184,81 @@ public class DatabaseManager {
                 ps.setString(4, "CNF");
 		ps.executeUpdate();	
                 return true;
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+    public boolean ConfirmSeats(SeatsConfirmation sc){
+        try{
+            String sql = "select source,train_id,train_no,destination from TrainStatus";
+            ResultSet rs = st.executeQuery(sql);
+            int SID=0,DID=0;
+            while(rs.next()) {
+                String datasource = rs.getString("source");
+                int id = (rs.getInt("train_id"));
+                String destination = rs.getString("destination");
+                if(datasource.equals(sc.getSource()))
+                {
+                    SID=id;
+                    System.out.println("sid --"+SID);
+                }
+                if(destination.equals(sc.getDestination()))
+                {
+                    DID=id;
+                    System.out.println("did --"+DID);
+                }
+            }
+            String sql1 = "select * from Availability";
+            ResultSet rs1 = st.executeQuery(sql1);
+            while(rs1.next()){
+                int ac_ct=rs1.getInt("seats_in_ac");
+                int sl_ct=rs1.getInt("seats_in_sleeper");
+                int trid=rs1.getInt("train_id");
+                String date=String.valueOf(rs1.getDate("date"));
+                if(DID==trid&&SID==trid&&date.equals(sc.getDate())){
+                        if(sc.getCoach().equals("AC")){
+                           int s= ac_ct-Integer.parseInt(sc.getNoPassg());
+                           st.executeUpdate("update Availability set seats_in_ac="+s+" where date='"+date+"' and train_id="+SID);
+                           System.out.println("if1 sub if");
+                        }
+                        else{
+                            int s= sl_ct-Integer.parseInt(sc.getNoPassg());
+                            st.executeUpdate("update Availability set seats_in_sleeper="+s+" where date='"+date+"' and train_id="+SID);
+                            System.out.println("if 1 else -");
+                        }
+                        return true;
+                    }
+                else if(DID-SID==1&&(trid==DID||trid==SID)&&date.equals(sc.getDate())){
+                    if(sc.getCoach().equals("AC")){
+                           int s= ac_ct-Integer.parseInt(sc.getNoPassg());
+                           st.executeUpdate("update Availability set seats_in_ac="+s+" where date='"+date+"' and (train_id="+SID+" or train_id="+DID+")");
+                            System.out.println("if 2 sub if");
+                    }
+                    else{
+                            int s= sl_ct-Integer.parseInt(sc.getNoPassg());
+                            st.executeUpdate("update Availability set seats_in_sleeper="+s+" where date='"+date+"' and (train_id="+SID+" or train_id="+DID+")");
+                             System.out.println("if2 sub else");
+                        }
+                    return true;
+                }
+                else if(DID-SID==2&&(trid==DID||trid==SID||trid==SID+1)&&date.equals(sc.getDate())){
+                    int sid1=SID+1;
+                    if(sc.getCoach().equals("AC")){
+                           int s= ac_ct-Integer.parseInt(sc.getNoPassg());
+                           st.executeUpdate("update Availability set seats_in_ac="+s+" where date='"+date+"' and (train_id="+SID+" or train_id="+DID+" or train_id="+sid1+")");
+                            System.out.println("if3 sub if");
+                    }
+                    else{
+                            int s= sl_ct-Integer.parseInt(sc.getNoPassg());
+                            st.executeUpdate("update Availability set seats_in_sleeper="+s+" where date='"+date+"' and (train_id="+SID+" or train_id="+DID+" or train_id="+sid1+")");
+                             System.out.println("if3 sub else");
+                        }
+                    return true;
+                }
+                   
+                }
+         
         }catch(Exception e){
             e.printStackTrace();
         }

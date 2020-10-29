@@ -5,6 +5,9 @@
  */
 package Client;
 
+import java.awt.Font;
+import javax.swing.JLabel;
+
 /**
  *
  * @author Priyanshi Dixit
@@ -13,11 +16,53 @@ public class Ticket extends javax.swing.JFrame {
 
     /**
      * Creates new form Ticket
+     * @param usnm
      * @param tr
      */
-    public Ticket(TicketRequest tr) {
+    String usnm;
+    public Ticket(String usnm,TicketRequest tr) {
         initComponents();
         setLocation(400,100);
+        this.usnm=usnm;
+       JLabel train_no=new JLabel(tr.getArrival());
+       train_no.setFont(new Font("Times new roman", Font.BOLD,18));
+       train_no.setBounds(300,10,100,50);
+       Panel.add(train_no);
+       
+       JLabel Source=new JLabel(tr.getSource());
+       Source.setFont(new Font("Times new roman", Font.BOLD,18));
+       Source.setBounds(300,45,100,50);
+       Panel.add(Source);
+       
+       JLabel departure=new JLabel(tr.getDeparture());
+       departure.setFont(new Font("Times new roman", Font.BOLD,18));
+       departure.setBounds(300,80,100,50);
+       Panel.add(departure);
+       
+       JLabel destination=new JLabel(tr.getDestination());
+       destination.setFont(new Font("Times new roman", Font.BOLD,18));
+       destination.setBounds(300,115,100,50);
+       Panel.add(destination);
+       
+       JLabel arrival=new JLabel(tr.getArrival());
+       arrival.setFont(new Font("Times new roman", Font.BOLD,18));
+       arrival.setBounds(300,150,100,50);
+       Panel.add(arrival);
+       
+       JLabel noOfPsg=new JLabel(tr.getPassg());
+       noOfPsg.setFont(new Font("Times new roman", Font.BOLD,18));
+       noOfPsg.setBounds(300,190,100,50);
+       Panel.add(noOfPsg);
+       
+       JLabel fare=new JLabel(tr.getFare());
+       fare.setFont(new Font("Times new roman", Font.BOLD,18));
+       fare.setBounds(300,220,100,50);
+       Panel.add(fare);
+       
+       JLabel date=new JLabel(tr.getDate());
+       date.setFont(new Font("Times new roman", Font.BOLD,18));
+       date.setBounds(300,260,100,50);
+       Panel.add(date);
     }
 
     /**
@@ -51,6 +96,7 @@ public class Ticket extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("TICKET");
 
         jLabel2.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
@@ -62,10 +108,10 @@ public class Ticket extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(242, 242, 242)
-                .addComponent(jLabel1)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -79,31 +125,31 @@ public class Ticket extends javax.swing.JFrame {
 
         Panel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jLabel3.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel3.setText("TRAIN NUMBER");
 
-        jLabel4.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel4.setText("SOURCE");
 
-        jLabel5.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel5.setText("DEPARTURE");
 
-        jLabel6.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel6.setText("DESTINATION");
 
-        jLabel7.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel7.setText("ARRIVAL");
 
-        jLabel8.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jLabel8.setText("NUMPER OF PASSANGERS");
+        jLabel8.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        jLabel8.setText("NUMBER OF PASSANGERS");
 
-        jLabel9.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel9.setText("TOTAL FARE");
 
-        jLabel10.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel10.setText("DATE");
 
-        jLabel11.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel11.setText("SEATS");
 
         javax.swing.GroupLayout PanelLayout = new javax.swing.GroupLayout(Panel);
@@ -175,7 +221,7 @@ public class Ticket extends javax.swing.JFrame {
                         .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(back, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,10 +241,14 @@ public class Ticket extends javax.swing.JFrame {
 
     private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
         // TODO add your handling code here:
+        this.hide();
+        new HomePage(usnm).setVisible(true);
     }//GEN-LAST:event_backActionPerformed
 
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
         // TODO add your handling code here:
+        this.hide();
+        new LoginPage().setVisible(true);
     }//GEN-LAST:event_logoutActionPerformed
 
     /**
@@ -232,7 +282,7 @@ public class Ticket extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new Ticket(null).setVisible(true);
+                new Ticket("xyz123",null).setVisible(true);
             }
         });
     }
