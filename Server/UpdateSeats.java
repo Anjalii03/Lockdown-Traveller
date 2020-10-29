@@ -26,6 +26,7 @@ public class UpdateSeats extends javax.swing.JFrame {
      */
     public UpdateSeats() {
         initComponents();
+
     }
 
     /**
@@ -247,55 +248,69 @@ public class UpdateSeats extends javax.swing.JFrame {
             {
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3308/softablitz?","root","");
             Statement st = con.createStatement();
-            String currentSeatsInAC="";
-            String currentSeatsInSleeper="";
+            int SID=0;
             String sql="Select * from trainstatus";      
             ResultSet rs = st.executeQuery(sql);
             while(rs.next()) {
                 String dataTrain_no=rs.getString("train_no");
                 if(dataTrain_no.equals(this.train_no.getText())){
-                    currentSeatsInAC=rs.getString("seats_in_ac");
-                    currentSeatsInSleeper=rs.getString("seats_in_sleeper");
+                   SID=rs.getInt("train_id");
                     break;
                 }
-                }
-            String act="";
+            }
+            if(SID==0){
+                JOptionPane.showMessageDialog(this , "Train not found ");
+            }
+            else{
+                String act="-";
             if(add.isSelected()){
                 act="+";
             }
-            else{
-                act="-";
-            }
-            if(ac.isSelected()){
-                if(Integer.parseInt(currentSeatsInAC)<Integer.parseInt(seats.getText())&&act.equals("-")){
-                     JOptionPane.showMessageDialog(this , "Not enough seats to remove");
+            int MID=SID+1, DID=SID+2;
+            String sql1="select * from availability";
+            ResultSet rs1=st.executeQuery(sql1);
+            while(rs1.next()){
+                int currentSeatsInAC=rs1.getInt("seats_in_ac");
+                int currentSeatsInSleeper=rs1.getInt("seats_in_sleeper");
+                if(ac.isSelected()){
+                if(currentSeatsInAC<Integer.parseInt(seats.getText())&&act.equals("-")){
+                    JOptionPane.showMessageDialog(this , "Not enough seats to remove");
+                    break;
                 }
                 else{
                     int s=0;
                     if(act.equals("-")){
-                        s=Integer.parseInt(currentSeatsInAC)-Integer.parseInt(seats.getText());
+                        s=currentSeatsInAC-Integer.parseInt(seats.getText());
                     }
                      if(act.equals("+")){
-                        s=Integer.parseInt(currentSeatsInAC)+Integer.parseInt(seats.getText());
+                        s=currentSeatsInAC+Integer.parseInt(seats.getText());
                     }
-                    st.executeUpdate("update trainstatus set seats_in_ac='"+s+"'where train_no= '"+train_no.getText()+"'");
+                    st.executeUpdate("update Availability set seats_in_ac='"+s+"'where train_id= '"+SID+"' or train_id='"+MID+"' or train_id='"+DID+"'");
+                break;
                 } 
             }
             if(sleeper.isSelected()){
-                 if(Integer.parseInt(currentSeatsInSleeper)<Integer.parseInt(seats.getText())&&act.equals("-")){
-                     JOptionPane.showMessageDialog(this , "Not enough seats to remove");
+                 if(currentSeatsInSleeper<Integer.parseInt(seats.getText())&&act.equals("-")){
+                    JOptionPane.showMessageDialog(this , "Not enough seats to remove");
+                    break;
                 }
                  else{
                      int s=0;
                      if(act.equals("-")){
-                        s=Integer.parseInt(currentSeatsInSleeper)-Integer.parseInt(this.seats.getText());
+                        s=currentSeatsInSleeper-Integer.parseInt(this.seats.getText());
                      }
                       if(act.equals("+")){
-                        s=Integer.parseInt(currentSeatsInSleeper)+Integer.parseInt(this.seats.getText());
+                        s=(currentSeatsInSleeper)+Integer.parseInt(this.seats.getText());
                      } 
-                     st.executeUpdate("update trainstatus set seats_in_sleeper='"+s+"'where train_no= '"+train_no.getText()+"'");
+                     st.executeUpdate("update availability set seats_in_sleeper='"+s+"'where train_id= '"+SID+"' or train_id='"+MID+"' or train_id='"+DID+"'");
+                 break;
                  }
             }
+            }
+            
+            }
+            
+           
             System.out.println("updated");
             con.close();
             
