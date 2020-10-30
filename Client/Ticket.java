@@ -22,9 +22,10 @@ public class Ticket extends javax.swing.JFrame {
     String usnm;
     public Ticket(String usnm,TicketRequest tr) {
         initComponents();
+        
         setLocation(400,100);
         this.usnm=usnm;
-       JLabel train_no=new JLabel(tr.getArrival());
+       JLabel train_no=new JLabel(tr.getTrain_no());
        train_no.setFont(new Font("Times new roman", Font.BOLD,18));
        train_no.setBounds(300,10,100,50);
        Panel.add(train_no);
@@ -63,6 +64,48 @@ public class Ticket extends javax.swing.JFrame {
        date.setFont(new Font("Times new roman", Font.BOLD,18));
        date.setBounds(300,260,100,50);
        Panel.add(date);
+       
+       int psg=Integer.parseInt(tr.getPassg());
+       int bef=tr.getSeatsBefore();
+       int x=30;
+        while(psg>0){
+                psg=psg-1;
+                String clas;
+                if(tr.getCoach().equals("AC")){
+                    clas="AC";
+                }
+                else{
+                    clas="SL";
+                }
+                int seat_no=32-(bef-1);
+                int coach=1;
+                if(seat_no>16){
+                    seat_no=seat_no-16;
+                    coach=2;
+                }
+                String seat_type;
+                if(seat_no%8==1||seat_no%8==4){
+                    seat_type="Lower";
+                }
+                else if(seat_no%8==2||seat_no%8==5){
+                     seat_type="Middle";
+                }
+                else if(seat_no%8==3||seat_no%8==6){
+                    seat_type="Upper";
+                }
+                else if(seat_no%8==7){
+                    seat_type="Side Lower";
+                }
+                else{
+                    seat_type="side Upper";
+                }
+                 JLabel seat=new JLabel(clas+"-"+coach+", "+seat_no+" "+seat_type);
+                 seat.setFont(new Font("Times new roman", Font.BOLD,16));
+                 seat.setBounds(300,260+x,200,50);
+                 Panel.add(seat);
+                x=x+30;
+                bef=bef-1;
+            }   
     }
 
     /**

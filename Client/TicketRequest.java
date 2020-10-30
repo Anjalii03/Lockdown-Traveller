@@ -13,6 +13,7 @@ import java.io.Serializable;
  */
 public class TicketRequest implements Serializable{
     String coach,arrival,departure,source,destination,passg,fare,date,train_no,NoOfSeats;
+    int seats_before;
     public String getArrival(){
         return arrival;
     }
@@ -42,6 +43,12 @@ public class TicketRequest implements Serializable{
     }
     public String getNoOfSeats(){
         return NoOfSeats;
+    }
+    public void SetSeatsBefore(int seats_before){
+        this.seats_before=seats_before;
+    }
+    public int getSeatsBefore(){
+        return seats_before;
     }
     public TicketRequest(String coach,String arrival,String departure,String source,
             String destination,String passg,String fare,String date,String train_no,String NoOfSeats)

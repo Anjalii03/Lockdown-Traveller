@@ -10,6 +10,7 @@ import java.awt.Font;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import javax.swing.*;
+
 public class TrainDetails extends javax.swing.JFrame {
 
     /**
@@ -385,14 +386,6 @@ public class TrainDetails extends javax.swing.JFrame {
              fare=Integer.parseInt(fareSL)*Integer.parseInt(passg);
              Seats=SeatsSl;
         }
-       // Integer.parseInt(passg);
-      //  String coach,String arrival,String departure,String source,
-     //   String destination,String passg,String fare,String date,String train_no
-     /* String Trainno;
-     String sor;
-     String des,Seatsac,SeatsSl,fareAC,fareSL;
-     String dep;
-     String arv;*/
         TicketRequest tr=new TicketRequest(ac_sl,arv,dep,sor,des,passg,String.valueOf(fare),Date,Trainno,Seats);
         new Booking(user,Integer.parseInt(passg),tr).setVisible(true);
         this.hide();

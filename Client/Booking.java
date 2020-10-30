@@ -184,7 +184,8 @@ public class Booking extends javax.swing.JFrame {
             String name=this.Field[i][0].getText();
             String age=this.Field[i][1].getText();
             String gender=(String) combo[i].getSelectedItem();
-            BookingRequest br =new BookingRequest(name,age,gender);
+            //String name,String age,String gender,String username,String date,String coach,String source,String destination
+            BookingRequest br =new BookingRequest(name,age,gender,usnm,Tr.getDate(),Tr.getCoach(),Tr.getSource(),Tr.getDestination());
             try{
                 ObjectOutputStream objectOutputStream=new ObjectOutputStream(socket.getOutputStream());         
                 ObjectInputStream objectInputStream=new ObjectInputStream(socket.getInputStream());
@@ -212,9 +213,9 @@ public class Booking extends javax.swing.JFrame {
             objectOutputStream.writeObject(sc);
             System.out.println("sending values");
             objectOutputStream.flush();  
-            if(objectInputStream.readBoolean()){
-                System.out.println("Seats Sucessfully alloted to u");
-            }
+            int before_seats=(int) objectInputStream.readInt();
+                System.out.println("Seats Sucessfully alloted to u "+before_seats);
+                Tr.SetSeatsBefore(before_seats);
                 
         }catch(Exception e){
         e.printStackTrace();

@@ -66,7 +66,7 @@ public class HandleClient implements Runnable {
                         SeatsConfirmation cs = (SeatsConfirmation) objectInputStream.readObject();
                         System.out.println("Message received");
                         System.out.println(cs);
-                        objectOutputStream.writeBoolean(db.ConfirmSeats(cs));
+                        objectOutputStream.writeInt(db.ConfirmSeats(cs));
                         objectOutputStream.flush();
                         break;    
                 }
