@@ -1,3 +1,4 @@
+
 package Server;
 /*
 *
@@ -6,7 +7,9 @@ package Server;
 */
 import java.sql.*;
 import Client.*;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 public class DatabaseManager {
 	private static Connection con;
 	private static Statement st;
@@ -34,6 +37,37 @@ public class DatabaseManager {
 	System.out.println(e);
 	}
     }
+    
+    public static void updateDate() throws ParseException
+    {
+        try{  
+            String sql = "select date from Availability";
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next())
+            {
+                java.util.Date databasedate = rs.getDate("date");
+                System.out.println(databasedate);
+                java.sql.Date current = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+                System.out.println(current);
+              
+                if(databasedate.compareTo(current) < 0)
+                {
+                    try{
+                        PreparedStatement ps = con.prepareStatement("Update Availability set date = DATE_ADD(date, INTERVAL 5 DAY), seats_in_ac = 32,seats_in_sleeper = 32 where date <= Date(now())");
+                        System.out.println("Date updated");
+                        ps.executeUpdate();
+              
+                    }catch(SQLException e){
+                        System.out.println(e); 
+                    }
+                }
+            }
+        }
+        catch(SQLException e){
+            System.out.println(e);
+        }  
+    }
+    
     public boolean Register(RegisterRequest r){
         try{
             PreparedStatement ps = con.prepareStatement("INSERT INTO user (first_name,last_name,dob,gender,phone_no,email,username,password) "
@@ -176,24 +210,12 @@ public class DatabaseManager {
     }
     public boolean addPassenger(BookingRequest br){
         try{
-            int coach;
-            if(br.getCoach().equals("AC")){
-                coach=1;
-            }
-            else{
-                coach=2;
-            }
-            PreparedStatement ps = con.prepareStatement("INSERT INTO passengers (user_id,name,age,gender,status,coach_no,source,desrination,date) "
-                    + "values(?,?,?,?,?,?,?,?) ");
-                ps.setString(1, br.getUsername());
-		ps.setString(2, br.getName());
-		ps.setString(3, br.getAge());
-		ps.setString(4, br.getGender());
-                ps.setString(5, "CNF");
-                ps.setInt(6, coach);
-                ps.setString(7, br.getSource());
-                ps.setString(8, br.getDestination());
-                ps.setString(9, br.getDate());
+            PreparedStatement ps = con.prepareStatement("INSERT INTO passengers (name,age,gender,status) "
+                      + "values(?,?,?,?) ");
+		ps.setString(1, br.getName());
+		ps.setString(2, br.getAge());
+		ps.setString(3, br.getGender());
+                ps.setString(4, "CNF");
 		ps.executeUpdate();	
                 return true;
         }catch(Exception e){
@@ -201,7 +223,7 @@ public class DatabaseManager {
         }
         return false;
     }
-    public int ConfirmSeats(SeatsConfirmation sc){
+    public boolean ConfirmSeats(SeatsConfirmation sc){
         try{
             String sql = "select source,train_id,train_no,destination from TrainStatus";
             ResultSet rs = st.executeQuery(sql);
@@ -233,29 +255,26 @@ public class DatabaseManager {
                            int s= ac_ct-Integer.parseInt(sc.getNoPassg());
                            st.executeUpdate("update Availability set seats_in_ac="+s+" where date='"+date+"' and train_id="+SID);
                            System.out.println("if1 sub if");
-                           return ac_ct;
                         }
                         else{
                             int s= sl_ct-Integer.parseInt(sc.getNoPassg());
                             st.executeUpdate("update Availability set seats_in_sleeper="+s+" where date='"+date+"' and train_id="+SID);
                             System.out.println("if 1 else -");
-                            return sl_ct;
                         }
-                        
+                        return true;
                     }
                 else if(DID-SID==1&&(trid==DID||trid==SID)&&date.equals(sc.getDate())){
                     if(sc.getCoach().equals("AC")){
                            int s= ac_ct-Integer.parseInt(sc.getNoPassg());
                            st.executeUpdate("update Availability set seats_in_ac="+s+" where date='"+date+"' and (train_id="+SID+" or train_id="+DID+")");
                             System.out.println("if 2 sub if");
-                            return ac_ct;
                     }
                     else{
                             int s= sl_ct-Integer.parseInt(sc.getNoPassg());
                             st.executeUpdate("update Availability set seats_in_sleeper="+s+" where date='"+date+"' and (train_id="+SID+" or train_id="+DID+")");
                              System.out.println("if2 sub else");
-                             return sl_ct;
                         }
+                    return true;
                 }
                 else if(DID-SID==2&&(trid==DID||trid==SID||trid==SID+1)&&date.equals(sc.getDate())){
                     int sid1=SID+1;
@@ -263,14 +282,13 @@ public class DatabaseManager {
                            int s= ac_ct-Integer.parseInt(sc.getNoPassg());
                            st.executeUpdate("update Availability set seats_in_ac="+s+" where date='"+date+"' and (train_id="+SID+" or train_id="+DID+" or train_id="+sid1+")");
                             System.out.println("if3 sub if");
-                            return ac_ct;
                     }
                     else{
                             int s= sl_ct-Integer.parseInt(sc.getNoPassg());
                             st.executeUpdate("update Availability set seats_in_sleeper="+s+" where date='"+date+"' and (train_id="+SID+" or train_id="+DID+" or train_id="+sid1+")");
                              System.out.println("if3 sub else");
-                              return sl_ct;
                         }
+                    return true;
                 }
                    
                 }
@@ -278,9 +296,138 @@ public class DatabaseManager {
         }catch(Exception e){
             e.printStackTrace();
         }
-        return 0;
+        return false;
     }
+    
+    public ArrayList BookingHistory(BookingHistoryRequest b)
+    {    try
+        {
+            String us = b.getUsername();
+           
+            ArrayList<ArrayList<String>> blist = new ArrayList<ArrayList<String>>();
+            System.out.println("User Id : "+us);
+            String sq = "select * from passengers where username='"+us+"' ";
+            ResultSet rs = st.executeQuery(sq);
+            while(rs.next())
+            {
+                ArrayList<String> bl = new ArrayList<String>(); 
+                
+                bl.add(String.valueOf(rs.getInt("passenger_id")));
+                bl.add(rs.getString("username"));
+                bl.add(rs.getString("name"));
+                bl.add(String.valueOf(rs.getInt("age")));
+                bl.add(rs.getString("gender"));
+                bl.add(rs.getString("status"));
+                bl.add(String.valueOf(rs.getInt("coach_no")));
+                bl.add(rs.getString("date"));
+                bl.add(rs.getString("source"));
+                bl.add(rs.getString("destination"));
+                        
+                blist.add(bl);          
+                        
+                } 
+                System.out.println(blist);
+                return blist;
+            
+        }catch(SQLException e) {
+            System.out.println(e);
+        }
+     return null;
+    }
+    
+    public boolean CancelBooking(CancelBookingRequest c)
+    {    try
+        {   
+            int passenger_id = c.getPassengerId();
+            String date = c.getDate();
+            int coach_no = c.getCoachNo();
+            String source = c.getSource();
+            String destination = c.getDestination();
+            
+            int s_trainId = 0,d_trainId = 0;
+            String sId = "select train_id ,source,destination from TrainStatus where source = '"+source+"' ";
+            ResultSet rs = st.executeQuery(sId);
+            while(rs.next())
+            {
+               int id = rs.getInt("train_id");
+               String datasource = rs.getString("source");
+               String datadestination = rs.getString("destination");
+               if(datasource.equals(source))
+               {
+                   s_trainId = id;
+               }
+               if(datadestination.equals(destination))
+               {
+                   d_trainId = id;
+               }
+            }
+                    
+                    if(s_trainId == d_trainId -1 )
+                    {
+                        if(coach_no == 1 ||  coach_no ==2)
+                {
+                    String update = "update availability set seats_in_ac = seats_in_ac + 1 where train_id in ('"+s_trainId+"','"+d_trainId+"') and date = '"+date+"' ";
+                    st.executeUpdate(update);
+                }
+                else
+                {
+                    String update = "update availability set seats_in_ac = seats_in_sleeper + 1 where train_id in ('"+s_trainId+"','"+d_trainId+"') and date = '"+date+"' ";
+                    st.executeUpdate(update);
+                }
+                }
+            else
+            {
+                 if(coach_no == 3 ||  coach_no ==4)
+                {
+                    String update = "update availability set seats_in_ac = seats_in_ac + 1 where train_id in ('"+s_trainId+"','"+d_trainId+"','"+(s_trainId + 1)+"') and date = '"+date+"' "; 
+                    st.executeUpdate(update);
+                }
+                else
+                {
+                    String update = "update availability set seats_in_ac = seats_in_sleeper + 1 where train_id in('"+s_trainId+"','"+d_trainId+"','"+(s_trainId + 1)+"') and date = '"+date+"' ";
+                    st.executeUpdate(update);
+                }
+            }  
+                    
+            String sq = "delete from passengers where passenger_id = '"+passenger_id+"'";
+            st.executeUpdate(sq);
+            
+            return true;
+            
+         }catch(SQLException e) {
+            System.out.println(e);
+        }
+    
+       return false;
+    }
+    
+    public ArrayList CancelledTrains(CancelledTrainsRequest ctr)
+    {
+        try{
+            ArrayList<ArrayList<String>> ctlist = new ArrayList<ArrayList<String>>();
+            String sql = "select * from CancelledTrains";
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next())
+            {
+                ArrayList<String> ct = new ArrayList<String>();
+                ct.add(String.valueOf(rs.getInt("train_no")));
+                ct.add(String.valueOf(rs.getString("date")));
+                
+                ctlist.add(ct);
+            }
+            System.out.println(ctlist);
+            return ctlist;
+            
+        }catch(SQLException e) {
+            System.out.println(e);
+        }
+     return null;      
+        
+    }
+    
+   
     public static void main(String[] args) {    
         
     } 
 }
+
