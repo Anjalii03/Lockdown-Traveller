@@ -78,6 +78,11 @@ public class Admin extends javax.swing.JFrame {
         });
 
         UpdateTrain.setText("Add/Remove/Cancel Train");
+        UpdateTrain.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UpdateTrainActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setText("HOME");
@@ -203,6 +208,12 @@ public class Admin extends javax.swing.JFrame {
         this.hide();
         new UpdateSeats().setVisible(true);
     }//GEN-LAST:event_UpdateSeatsActionPerformed
+
+    private void UpdateTrainActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateTrainActionPerformed
+        // TODO add your handling code here:
+        this.hide();
+        new updateTraininfo().setVisible(true);
+    }//GEN-LAST:event_UpdateTrainActionPerformed
 
     /**
      * @param args the command line arguments

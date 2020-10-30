@@ -24,6 +24,7 @@ public class updateTraininfo extends javax.swing.JFrame {
     private String s1, s2;
     public updateTraininfo() {
         initComponents();
+        setLocation(300,200);
     }
 
     /**
@@ -35,8 +36,6 @@ public class updateTraininfo extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        date = new com.toedter.calendar.JDateChooser();
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroup2 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
@@ -156,11 +155,10 @@ public class updateTraininfo extends javax.swing.JFrame {
                 .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(cancel, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(train_no, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(update, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
-                        .addComponent(train_id, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(addTrain, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(train_no)
+                    .addComponent(update, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+                    .addComponent(train_id)
+                    .addComponent(addTrain, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(din, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(removeTrain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -222,11 +220,11 @@ public class updateTraininfo extends javax.swing.JFrame {
                   } 
         else{
                 try{
-                  Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softablitz","root","root");
+                  Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3308/softablitz?","root","");
                   Statement st = con.createStatement();
-                  
+                  System.out.println("connected");
                   int flag=0,flg=0;
-                  String sql="select * from availableTrains";
+                  String sql="select * from availability";
                   ResultSet rs = st.executeQuery(sql);
                   while(rs.next()){
                   String datadate=rs.getString("date");
@@ -236,7 +234,7 @@ public class updateTraininfo extends javax.swing.JFrame {
                   break;
                   }}
                 if(flag==0){JOptionPane.showMessageDialog(this, "Please enter valid date");}  
-                 String ql="select * from train_status"; 
+                 String ql="select * from trainstatus"; 
                  ResultSet rs1 = st.executeQuery(ql);
                  while(rs1.next()){
                   String dataTrainid=rs1.getString("train_id");
@@ -251,12 +249,12 @@ public class updateTraininfo extends javax.swing.JFrame {
                   
                   if(removeTrain.isSelected())
                   {  
-                  st.executeUpdate("delete from train_status where(train_no='"+train_no.getText()+"')");
+                  st.executeUpdate("delete from trainstatus where(train_no='"+train_no.getText()+"')");
                   }
                   else if(cancel.isSelected())
                   {
                   st.executeUpdate("insert into cancelledTrains values('"+train_no.getText()+"','"+din.getText()+"')");   
-                  st.executeUpdate("delete from availableTrains where train_id in(select train_id from train_status where train_no='"+train_no.getText()+"')and date='"+din.getText()+"'");
+                  st.executeUpdate("delete from availability where train_id in(select train_id from trainstatus where train_no='"+train_no.getText()+"')and date='"+din.getText()+"'");
                   }
                  System.out.println("updated");
                  con.close();
@@ -302,7 +300,7 @@ public class updateTraininfo extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        Admin_1 a=new Admin_1();
+        Admin a=new Admin();
         a.setVisible(true);
         a.pack();
         a.setLocationRelativeTo(null);
@@ -362,10 +360,8 @@ public class updateTraininfo extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JRadioButton cancel;
-    private com.toedter.calendar.JDateChooser date;
     private javax.swing.JFormattedTextField din;
     private javax.swing.JButton jButton2;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

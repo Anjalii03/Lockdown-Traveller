@@ -90,7 +90,7 @@ public class addTrainDetails extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(204, 204, 255));
+        jPanel1.setBackground(new java.awt.Color(238, 238, 148));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("ADD THE TRAINS");
@@ -334,7 +334,7 @@ public class addTrainDetails extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        close();
+        this.hide();
         updateTraininfo a = new updateTraininfo();
         a.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -350,9 +350,9 @@ public class addTrainDetails extends javax.swing.JFrame {
         } 
         else{
         try{
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softablitz","root","root");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3308/softablitz?","root","");
             Statement st = con.createStatement();
-            String sql="select * from train_status";
+            String sql="select * from trainstatus";
             ResultSet rs = st.executeQuery(sql);
             int s=0;
             while(rs.next())
@@ -371,7 +371,7 @@ public class addTrainDetails extends javax.swing.JFrame {
                 else{ st.executeUpdate("insert into train values('"+train_no.getText()+"','"+fareAc.getText()+"','"+fareSleeper.getText()+"')");
             }
             }
-            st.executeUpdate("insert into train_status values('"+train_id.getText()+"','"+train_no.getText()+"','"+source.getText()+"','"+destination.getText()+"','"+distance.getText()+"','"+arrival.getText()+"','"+departure.getText()+"','"+ac.getText()+"','"+sleeper.getText()+"')");
+            st.executeUpdate("insert into trainstatus values('"+train_id.getText()+"','"+train_no.getText()+"','"+source.getText()+"','"+destination.getText()+"','"+distance.getText()+"','"+arrival.getText()+"','"+departure.getText()+"','"+ac.getText()+"','"+sleeper.getText()+"')");
             con.close();
         }
         catch(Exception e){
