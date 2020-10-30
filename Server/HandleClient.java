@@ -21,8 +21,8 @@ public class HandleClient implements Runnable {
     public void run() {
         while (true) {
             try {  
-                 ObjectInputStream objectInputStream=new ObjectInputStream(socket.getInputStream());
-                 ObjectOutputStream objectOutputStream=new ObjectOutputStream(socket.getOutputStream());
+                ObjectInputStream objectInputStream=new ObjectInputStream(socket.getInputStream());
+                ObjectOutputStream objectOutputStream=new ObjectOutputStream(socket.getOutputStream());
                 DatabaseManager db=new DatabaseManager();
                 db.setConnection();                                //database connection established
                 int func=(int)objectInputStream.readInt();        //client returns action number
@@ -66,7 +66,7 @@ public class HandleClient implements Runnable {
                         SeatsConfirmation cs = (SeatsConfirmation) objectInputStream.readObject();
                         System.out.println("Message received");
                         System.out.println(cs);
-                        objectOutputStream.writeBoolean(db.ConfirmSeats(cs));
+                        objectOutputStream.writeInt(db.ConfirmSeats(cs));
                         objectOutputStream.flush();
                         break;  
                     case 6 : 

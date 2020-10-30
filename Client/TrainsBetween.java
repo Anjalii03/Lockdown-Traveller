@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Client;
 import static Client.Client.socket;
 import java.awt.Color;
@@ -40,7 +35,7 @@ public class TrainsBetween extends javax.swing.JFrame {
        user.setBounds(500,10,100,50);
        Panel.add(user);
         String dateTo=java.time.LocalDate.now().toString();
-        date.addItem(dateTo);
+        //date.addItem(dateTo);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Calendar cal = Calendar.getInstance();
         try{

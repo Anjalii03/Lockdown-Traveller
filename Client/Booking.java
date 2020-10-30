@@ -216,12 +216,15 @@ public class Booking extends javax.swing.JFrame {
             int before_seats=(int) objectInputStream.readInt();
                 System.out.println("Seats Sucessfully alloted to u "+before_seats);
                 Tr.SetSeatsBefore(before_seats);
-                
+            if(before_seats>0){
+               new Ticket(usnm,Tr).setVisible(true);
+               this.hide();
+            }
+        
         }catch(Exception e){
         e.printStackTrace();
     }
-        new Ticket(usnm,Tr).setVisible(true);
-        this.hide();
+       
     }//GEN-LAST:event_processActionPerformed
 
     /**

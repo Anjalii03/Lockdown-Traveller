@@ -37,7 +37,6 @@ public class CustomerInformation extends javax.swing.JFrame {
             
             while(rs.next()){
                 
-                String user_id = String.valueOf(rs.getInt("user_id"));
                 String first_name = rs.getString("first_Name");
                 String last_name = rs.getString("last_Name");
                 String dob = rs.getString("dob");
@@ -46,7 +45,7 @@ public class CustomerInformation extends javax.swing.JFrame {
                 String email = rs.getString("email");
                 String username = rs.getString("username");
                 
-                String tbData[] = {user_id, first_name, last_name, dob, gender, phone_no, email, username};
+                String tbData[] = { first_name, last_name, dob, gender, phone_no, email, username};
                
                 
                 DefaultTableModel tblModel = (DefaultTableModel)CustomerInformation.getModel();
@@ -96,11 +95,11 @@ public class CustomerInformation extends javax.swing.JFrame {
 
             },
             new String [] {
-                "User Id", "First Name", "Last Name", "Date of Birth", "Gender", "Phone Number", "Email Id", "Username"
+                "First Name", "Last Name", "Date of Birth", "Gender", "Phone Number", "Email Id", "Username"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -109,12 +108,9 @@ public class CustomerInformation extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(CustomerInformation);
         if (CustomerInformation.getColumnModel().getColumnCount() > 0) {
-            CustomerInformation.getColumnModel().getColumn(0).setMinWidth(50);
-            CustomerInformation.getColumnModel().getColumn(0).setPreferredWidth(50);
-            CustomerInformation.getColumnModel().getColumn(0).setMaxWidth(50);
-            CustomerInformation.getColumnModel().getColumn(6).setMinWidth(200);
-            CustomerInformation.getColumnModel().getColumn(6).setPreferredWidth(200);
-            CustomerInformation.getColumnModel().getColumn(6).setMaxWidth(200);
+            CustomerInformation.getColumnModel().getColumn(5).setMinWidth(200);
+            CustomerInformation.getColumnModel().getColumn(5).setPreferredWidth(200);
+            CustomerInformation.getColumnModel().getColumn(5).setMaxWidth(200);
         }
 
         Back.setText("Back");
@@ -155,7 +151,7 @@ public class CustomerInformation extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(386, 386, 386)
                 .addComponent(Back, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(474, Short.MAX_VALUE))
+                .addContainerGap(365, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2)

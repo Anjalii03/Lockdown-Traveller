@@ -34,7 +34,7 @@ public class HomePage extends javax.swing.JFrame {
        JLabel user=new JLabel(usnm);
        user.setFont(new Font("Times new roman", Font.BOLD,18));
        user.setForeground(Color.white);
-       user.setBounds(600,5,100,50);
+       user.setBounds(580,5,100,50);
        Panel.add(user);
     }
     
@@ -202,7 +202,7 @@ public class HomePage extends javax.swing.JFrame {
             objectOutputStream.writeInt(6);
             objectOutputStream.flush();   
             System.out.println("sending 6");
-            BookingHistoryRequest bh = new  BookingHistoryRequest(usnm.getText());
+            BookingHistoryRequest bh = new  BookingHistoryRequest(usnm);
             objectOutputStream.writeObject(bh);
             System.out.println("sending values");
             objectOutputStream.flush();   

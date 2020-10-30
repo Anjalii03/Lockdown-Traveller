@@ -26,7 +26,7 @@ public class UpdateSeats extends javax.swing.JFrame {
      */
     public UpdateSeats() {
         initComponents();
-
+        setLocation(300,150);
     }
 
     /**
