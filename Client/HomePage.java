@@ -9,9 +9,16 @@
  * @author Anjali
  */
 package Client;
+import static Client.Client.socket;
 import java.awt.event.*;
 import java.awt.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class HomePage extends javax.swing.JFrame {
 
@@ -47,9 +54,9 @@ public class HomePage extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        TrainBetweenStationsButton = new javax.swing.JButton();
+        CancelledTrainsButton = new javax.swing.JButton();
+        BookingHistoryButton = new javax.swing.JButton();
         logout = new javax.swing.JButton();
         Panel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -60,27 +67,27 @@ public class HomePage extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton1.setText("See Train Between Stations");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        TrainBetweenStationsButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        TrainBetweenStationsButton.setText("See Train Between Stations");
+        TrainBetweenStationsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                TrainBetweenStationsButtonActionPerformed(evt);
             }
         });
 
-        jButton3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton3.setText("View Cancelled Trains");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        CancelledTrainsButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        CancelledTrainsButton.setText("View Cancelled Trains");
+        CancelledTrainsButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                CancelledTrainsButtonActionPerformed(evt);
             }
         });
 
-        jButton4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton4.setText("Your Booking History");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        BookingHistoryButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        BookingHistoryButton.setText("Your Booking History");
+        BookingHistoryButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                BookingHistoryButtonActionPerformed(evt);
             }
         });
 
@@ -101,9 +108,7 @@ public class HomePage extends javax.swing.JFrame {
         Panel.setLayout(PanelLayout);
         PanelLayout.setHorizontalGroup(
             PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelLayout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         PanelLayout.setVerticalGroup(
             PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -118,12 +123,12 @@ public class HomePage extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(54, 54, 54)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(CancelledTrainsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(69, 69, 69)
-                        .addComponent(jButton4))
+                        .addComponent(BookingHistoryButton))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(198, 198, 198)
-                        .addComponent(jButton1)))
+                        .addComponent(TrainBetweenStationsButton)))
                 .addContainerGap(108, Short.MAX_VALUE))
             .addComponent(Panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -136,11 +141,11 @@ public class HomePage extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(42, 42, 42)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(TrainBetweenStationsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(CancelledTrainsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BookingHistoryButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
                 .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20))
@@ -149,23 +154,105 @@ public class HomePage extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        close();
-    //    CancelledTrains ct = new CancelledTrains();
-    //    ct.setVisible(true);
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void CancelledTrainsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelledTrainsButtonActionPerformed
+        try{ 
+            ObjectOutputStream objectOutputStream=new ObjectOutputStream(socket.getOutputStream());         
+            ObjectInputStream objectInputStream=new ObjectInputStream(socket.getInputStream());
+            objectOutputStream.writeInt(8);
+            objectOutputStream.flush();   
+            System.out.println("sending 8");
+            CancelledTrainsRequest bh = new  CancelledTrainsRequest();
+            objectOutputStream.writeObject(bh);
+            System.out.println("sending values");
+            objectOutputStream.flush(); 
+            try{
+                 ArrayList<ArrayList<String>> ctlist = (ArrayList<ArrayList<String>>)objectInputStream.readObject();
+                     if(ctlist != null)
+                     {
+                         CancelledTrains ct = new CancelledTrains();
+                         ct.setVisible(true);
+                         int cn = ctlist.size();
+                         for(int i=0;i<cn;i++)
+                         {
+                             String train_no = String.valueOf(ctlist.get(i).get(0));
+                             String date = String.valueOf(ctlist.get(i).get(1));
+                             
+                             String data[] = {train_no,date};
+                             DefaultTableModel tblModel = (DefaultTableModel)ct.getCancelledTrainsTable().getModel();
+                             tblModel.addRow(data);
+                         }
+                         this.hide(); 
+                     }
+                      else
+                     {
+                         JOptionPane.showMessageDialog(this , "There are no cancelled trains!" );
+                     }
+            }catch (ClassNotFoundException ex) {
+                        ex.printStackTrace();
+                }
+            }catch(IOException e){
+            System.out.print(e+"button here");
+            } 
+    }//GEN-LAST:event_CancelledTrainsButtonActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-       close();
-    //   BookingHistory bh = new BookingHistory();
-    //   bh.setVisible(true);
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void BookingHistoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BookingHistoryButtonActionPerformed
+       try{ 
+            ObjectOutputStream objectOutputStream=new ObjectOutputStream(socket.getOutputStream());         
+            ObjectInputStream objectInputStream=new ObjectInputStream(socket.getInputStream());
+            objectOutputStream.writeInt(6);
+            objectOutputStream.flush();   
+            System.out.println("sending 6");
+            BookingHistoryRequest bh = new  BookingHistoryRequest(usnm.getText());
+            objectOutputStream.writeObject(bh);
+            System.out.println("sending values");
+            objectOutputStream.flush();   
+               try{
+                    ArrayList<ArrayList<String>> blist = (ArrayList<ArrayList<String>>)objectInputStream.readObject();
+                     if(blist != null)
+                     {
+                        BookingHistory b = new BookingHistory();
+                        b.setVisible(true);
+                        int bn = blist.size();
+                         for(int i=0; i<bn ;i++)
+                         {
+                             String passenger_id = String.valueOf(blist.get(i).get(0));
+                             String username = String.valueOf(blist.get(i).get(1));
+                             String name = String.valueOf(blist.get(i).get(2));
+                             String age = String.valueOf(blist.get(i).get(3));
+                             String gender = String.valueOf(blist.get(i).get(4));
+                             String status = String.valueOf(blist.get(i).get(5));
+                             String coach_no = String.valueOf(blist.get(i).get(6));
+                             String date = String.valueOf(blist.get(i).get(7));
+                             String source = String.valueOf(blist.get(i).get(8));
+                             String destination = String.valueOf(blist.get(i).get(9));
+                             
+                             String tbData[] = {passenger_id,username,name,age,gender,status,coach_no,date,source,destination};
+                             
+                             DefaultTableModel model = (DefaultTableModel)b.getBookingHistoryTable().getModel();
+                             model.addRow(tbData);   
+                         }
+                         this.hide();
+                     }
+                     else
+                     {
+                         JOptionPane.showMessageDialog(this , "You have no booking History" );
+                     }
+                    }    catch (ClassNotFoundException ex) {
+                        ex.printStackTrace();
+                }
+                     
+            }catch(IOException e){
+            System.out.print(e+"button here");
+            } 
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    
+    }//GEN-LAST:event_BookingHistoryButtonActionPerformed
+
+    private void TrainBetweenStationsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TrainBetweenStationsButtonActionPerformed
        close();
        TrainsBetween tb = new TrainsBetween(usnm);
        tb.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_TrainBetweenStationsButtonActionPerformed
 
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
         // TODO add your handling code here:
@@ -210,10 +297,10 @@ public class HomePage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BookingHistoryButton;
+    private javax.swing.JButton CancelledTrainsButton;
     private javax.swing.JPanel Panel;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton TrainBetweenStationsButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
