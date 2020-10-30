@@ -199,10 +199,10 @@ public class HomePage extends javax.swing.JFrame {
        try{ 
             ObjectOutputStream objectOutputStream=new ObjectOutputStream(socket.getOutputStream());         
             ObjectInputStream objectInputStream=new ObjectInputStream(socket.getInputStream());
-            objectOutputStream.writeInt(5);
+            objectOutputStream.writeInt(6);
             objectOutputStream.flush();   
-            System.out.println("sending 5");
-            BookingHistoryRequest bh = new  BookingHistoryRequest(jLabel2.getText());
+            System.out.println("sending 6");
+            BookingHistoryRequest bh = new  BookingHistoryRequest(usnm.getText());
             objectOutputStream.writeObject(bh);
             System.out.println("sending values");
             objectOutputStream.flush();   
