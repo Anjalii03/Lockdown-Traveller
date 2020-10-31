@@ -192,7 +192,16 @@ public class DatabaseManager {
 
                                 }
                             }
-                        return list;
+                            String sql3="select * from cancelledtrains";
+                            ResultSet r3 = st.executeQuery(sql3);
+                            while(r3.next()){
+                                String train_no=String.valueOf(r3.getInt("train_no"));
+                                String date=String.valueOf(r3.getDate("date"));
+                                if(list.get(0).equals(train_no)&&t.getDate().equals(date)){
+                                    return null;
+                                }
+                            }
+                            return list;
                         }
                     }
                    

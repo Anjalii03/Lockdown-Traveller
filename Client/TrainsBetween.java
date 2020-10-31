@@ -252,6 +252,7 @@ public class TrainsBetween extends javax.swing.JFrame {
                     
                     System.out.println(list);
                     if(list != null){  
+                        
                         TrainDetails t = new TrainDetails(usnm,Date,list.get(0).toString(),list.get(1).toString(),list.get(2).toString(),list.get(3).toString(),list.get(4).toString(),list.get(5).toString(),list.get(6).toString(),list.get(7).toString(),list.get(8).toString());
                         t.setVisible(true);
                         this.hide();
