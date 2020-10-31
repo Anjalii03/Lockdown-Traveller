@@ -32,7 +32,7 @@ public class TrainsBetween extends javax.swing.JFrame {
         JLabel user=new JLabel(usnm);
        user.setFont(new Font("Times new roman", Font.BOLD,18));
        user.setForeground(Color.white);
-       user.setBounds(500,10,100,50);
+       user.setBounds(480,10,100,50);
        Panel.add(user);
         String dateTo=java.time.LocalDate.now().toString();
         //date.addItem(dateTo);

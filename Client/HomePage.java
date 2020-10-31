@@ -169,7 +169,7 @@ public class HomePage extends javax.swing.JFrame {
                  ArrayList<ArrayList<String>> ctlist = (ArrayList<ArrayList<String>>)objectInputStream.readObject();
                      if(ctlist != null)
                      {
-                         CancelledTrains ct = new CancelledTrains();
+                         CancelledTrains ct = new CancelledTrains(usnm);
                          ct.setVisible(true);
                          int cn = ctlist.size();
                          for(int i=0;i<cn;i++)
@@ -210,7 +210,7 @@ public class HomePage extends javax.swing.JFrame {
                     ArrayList<ArrayList<String>> blist = (ArrayList<ArrayList<String>>)objectInputStream.readObject();
                      if(blist != null)
                      {
-                        BookingHistory b = new BookingHistory();
+                        BookingHistory b = new BookingHistory(usnm);
                         b.setVisible(true);
                         int bn = blist.size();
                          for(int i=0; i<bn ;i++)

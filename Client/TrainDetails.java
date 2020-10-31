@@ -39,7 +39,7 @@ public class TrainDetails extends javax.swing.JFrame {
        JLabel user=new JLabel(usnm);
        user.setFont(new Font("Times new roman", Font.BOLD,14));
        user.setForeground(Color.white);
-       user.setBounds(450,5,100,50);
+       user.setBounds(430,5,100,50);
        Panel1.add(user);
        
        Date=String.valueOf(date);

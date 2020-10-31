@@ -180,7 +180,7 @@ public class AdminLoginPage extends javax.swing.JFrame {
             dbm.setConnection();
              VerifyProvidedPassword vpp=new VerifyProvidedPassword();
              vpp.setProvidedPassword(password.getText());
-            String sql="Select username,password from Admin";      
+            String sql="Select username,password,salt from Admin";      
             ResultSet rs = st.executeQuery(sql);
             boolean flag=false;
             while(rs.next()) {
