@@ -178,13 +178,18 @@ public class AdminLoginPage extends javax.swing.JFrame {
             st=con.createStatement();
             DatabaseManager dbm=new DatabaseManager();
             dbm.setConnection();
+             VerifyProvidedPassword vpp=new VerifyProvidedPassword();
+             vpp.setProvidedPassword(password.getText());
             String sql="Select username,password from Admin";      
             ResultSet rs = st.executeQuery(sql);
             boolean flag=false;
             while(rs.next()) {
                 String datausername=rs.getString("username");
                 String datapassword=rs.getString("password");
-                if (datausername.equals(this.username.getText())&&datapassword.equals(this.password.getText())){  
+                String datasalt=rs.getString("salt");
+                vpp.setSalt(datasalt);
+                vpp.setsecurePassword(datapassword);
+                if (datausername.equals(this.username.getText())&&vpp.check()){  
                     System.out.println("found in db "+datausername+" "+datapassword);
                     this.hide();
                     flag=true;

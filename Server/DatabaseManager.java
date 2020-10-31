@@ -70,8 +70,11 @@ public class DatabaseManager {
     
     public boolean Register(RegisterRequest r){
         try{
-            PreparedStatement ps = con.prepareStatement("INSERT INTO user (first_name,last_name,dob,gender,phone_no,email,username,password) "
-                      + "values(?,?,?,?,?,?,?,?) ");
+             ProtectPassword pp=new ProtectPassword();
+             pp.setPassword(r.getPassword());
+             pp.setProtection();
+            PreparedStatement ps = con.prepareStatement("INSERT INTO user (first_name,last_name,dob,gender,phone_no,email,username,password,salt) "
+                      + "values(?,?,?,?,?,?,?,?,?) ");
 		ps.setString(1, r.getFirstNmae());
 		ps.setString(2, r.getLastNmae());
 		ps.setString(3, r.getDOB());
@@ -79,7 +82,8 @@ public class DatabaseManager {
                 ps.setString(5, r.getContact());
                 ps.setString(6, r.getEmail());
                 ps.setString(7, r.getUsername());
-                ps.setString(8, r.getPassword());
+                ps.setString(8, pp.getSecurePassword());
+                ps.setString(9, pp.getSalt());
 		ps.executeUpdate();	
                 return true;
         }catch(Exception e){
@@ -89,13 +93,18 @@ public class DatabaseManager {
     }
     public boolean Checklogin(LoginRequest l) {
         try{
-            String sql="Select username,password from user";      
+             VerifyProvidedPassword vpp=new VerifyProvidedPassword();
+             vpp.setProvidedPassword(l.getpassword());
+            String sql="Select username,password,salt from user";      
             ResultSet rs = st.executeQuery(sql);
             boolean flag=false;
             while(rs.next()) {
                 String datausername=rs.getString("username");
                 String datapassword=rs.getString("password");
-                if (datausername.equals(l.getusername())&&datapassword.equals(l.getpassword())){  
+                String datasalt=rs.getString("salt");
+                vpp.setSalt(datasalt);
+                vpp.setsecurePassword(datapassword);
+                if (datausername.equals(l.getusername())&&vpp.check()){  
                     System.out.println("found in db "+datausername+" "+datapassword);
                     flag=true;
                     return true;
