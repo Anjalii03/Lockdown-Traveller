@@ -22,8 +22,8 @@ An e-commerce platform to book tickets
 7.Can cancel the trains.    
 
 ### Features to Implement:   
-Providing the user seat preferences.     
-Multiple trains in a route.    
+1.Providing the user seat preferences.     
+2.Multiple trains in a route.  
 
 ### Instructions to run:  
 1.import mysql-connector-java-5.1.49.jar from dependency folder(adding jar file to the libraries) in LockdownTraveller.   
