@@ -272,7 +272,8 @@ public class UpdateSeats extends javax.swing.JFrame {
             while(rs1.next()){
                 int currentSeatsInAC=rs1.getInt("seats_in_ac");
                 int currentSeatsInSleeper=rs1.getInt("seats_in_sleeper");
-                if(ac.isSelected()){
+                int id=rs1.getInt("train_id");
+                if(ac.isSelected()&&(id==SID||id==SID+1||id==SID+2)){
                 if(currentSeatsInAC<Integer.parseInt(seats.getText())&&act.equals("-")){
                     JOptionPane.showMessageDialog(this , "Not enough seats to remove");
                     break;
@@ -282,14 +283,14 @@ public class UpdateSeats extends javax.swing.JFrame {
                     if(act.equals("-")){
                         s=currentSeatsInAC-Integer.parseInt(seats.getText());
                     }
-                     if(act.equals("+")){
+                    else if(act.equals("+")){
                         s=currentSeatsInAC+Integer.parseInt(seats.getText());
                     }
                     st.executeUpdate("update Availability set seats_in_ac='"+s+"'where train_id= '"+SID+"' or train_id='"+MID+"' or train_id='"+DID+"'");
                 break;
                 } 
             }
-            if(sleeper.isSelected()){
+            if(sleeper.isSelected()&&(id==SID||id==SID+1||id==SID+2)){
                  if(currentSeatsInSleeper<Integer.parseInt(seats.getText())&&act.equals("-")){
                     JOptionPane.showMessageDialog(this , "Not enough seats to remove");
                     break;
@@ -299,7 +300,7 @@ public class UpdateSeats extends javax.swing.JFrame {
                      if(act.equals("-")){
                         s=currentSeatsInSleeper-Integer.parseInt(this.seats.getText());
                      }
-                      if(act.equals("+")){
+                     else if(act.equals("+")){
                         s=(currentSeatsInSleeper)+Integer.parseInt(this.seats.getText());
                      } 
                      st.executeUpdate("update availability set seats_in_sleeper='"+s+"'where train_id= '"+SID+"' or train_id='"+MID+"' or train_id='"+DID+"'");
@@ -330,10 +331,16 @@ public class UpdateSeats extends javax.swing.JFrame {
 
     private void acActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acActionPerformed
         // TODO add your handling code here:
+        if(ac.isSelected()){
+            sleeper.setSelected(false);
+        }
     }//GEN-LAST:event_acActionPerformed
 
     private void sleeperActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sleeperActionPerformed
         // TODO add your handling code here:
+        if(sleeper.isSelected()){
+            ac.setSelected(false);
+        }
     }//GEN-LAST:event_sleeperActionPerformed
 
     private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
