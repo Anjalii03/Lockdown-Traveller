@@ -33,7 +33,7 @@ An e-commerce platform to book tickets
   
 ### For more details contact:
 1.Anjali Bhata - anjalibhatia0305@gmail.com  
-2.Priyanshi Dixit - priyanshi2k@gmail.com
+2.Priyanshi Dixit - priyanshi2k@gmail.com  
 3.Ayushi Barua - ayushib663@gmail.com  
   
 ### Screenshots
