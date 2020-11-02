@@ -99,8 +99,8 @@ public class TrainDetails extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel18 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        BookTicket = new javax.swing.JButton();
+        Back = new javax.swing.JButton();
         panel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         pasg = new javax.swing.JComboBox<>();
@@ -133,17 +133,17 @@ public class TrainDetails extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("Book Ticket ");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        BookTicket.setText("Book Ticket ");
+        BookTicket.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                BookTicketActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Back");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        Back.setText("Back");
+        Back.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                BackActionPerformed(evt);
             }
         });
 
@@ -350,9 +350,9 @@ public class TrainDetails extends javax.swing.JFrame {
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Back, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(214, 214, 214)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(BookTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(40, Short.MAX_VALUE))
         );
@@ -364,41 +364,55 @@ public class TrainDetails extends javax.swing.JFrame {
                 .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1))
+                    .addComponent(Back)
+                    .addComponent(BookTicket))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void BookTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BookTicketActionPerformed
         // TODO add your handling code here:
         String ac_sl= (String) coach.getSelectedItem();
         String passg= (String) pasg.getSelectedItem();
         int fare;
         String Seats;
+        boolean flag=true;
         if(ac_sl.equals("AC")){
             fare=Integer.parseInt(fareAC)*Integer.parseInt(passg);
             Seats=Seatsac;
+            if(Integer.parseInt(Seats)<Integer.parseInt(passg))
+            {
+                JOptionPane.showMessageDialog(this , "seats unavilable" );
+                flag=false;
+            }
         }
         else{
              fare=Integer.parseInt(fareSL)*Integer.parseInt(passg);
              Seats=SeatsSl;
+              if(Integer.parseInt(Seats)<Integer.parseInt(passg))
+            {
+                JOptionPane.showMessageDialog(this , "seats unavilable" );
+                flag=false;
+            }
         }
-        TicketRequest tr=new TicketRequest(ac_sl,arv,dep,sor,des,passg,String.valueOf(fare),Date,Trainno,Seats);
+        if(flag){
+            TicketRequest tr=new TicketRequest(ac_sl,arv,dep,sor,des,passg,String.valueOf(fare),Date,Trainno,Seats);
         new Booking(user,Integer.parseInt(passg),tr).setVisible(true);
         this.hide();
+        }
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+        
+    }//GEN-LAST:event_BookTicketActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackActionPerformed
         // TODO add your handling code here:
         TrainsBetween tb = new TrainsBetween(user);
         this.hide();
         tb.setVisible(true);
         
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_BackActionPerformed
 
     private void pasgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pasgActionPerformed
         // TODO add your handling code here:
@@ -438,13 +452,15 @@ public class TrainDetails extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TrainDetails("xyx123","2020-08-28","909090909","kanpur","allahabad","20:20","20:20","30","30","1000","700").setVisible(true);
+                new TrainDetails("xyx123","2020-08-28","909090909","kanpur","allahabad","20:20","20:20","1","30","1000","700").setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Arrival;
+    private javax.swing.JButton Back;
+    private javax.swing.JButton BookTicket;
     private javax.swing.JPanel Panel1;
     private javax.swing.JLabel acCost;
     private javax.swing.JLabel ac_seats;
@@ -453,8 +469,6 @@ public class TrainDetails extends javax.swing.JFrame {
     private javax.swing.JLabel departure;
     private javax.swing.JLabel destination;
     private javax.swing.JLabel head;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;

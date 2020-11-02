@@ -111,6 +111,11 @@ public class Booking extends javax.swing.JFrame {
         jLabel4.setText("Gender");
 
         back.setText("back");
+        back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout PanelLayout = new javax.swing.GroupLayout(Panel);
         Panel.setLayout(PanelLayout);
@@ -226,6 +231,12 @@ public class Booking extends javax.swing.JFrame {
     }
        
     }//GEN-LAST:event_processActionPerformed
+
+    private void backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backActionPerformed
+        // TODO add your handling code here:
+        this.hide();
+        new TrainsBetween(usnm).setVisible(true);
+    }//GEN-LAST:event_backActionPerformed
 
     /**
      * @param args the command line arguments
