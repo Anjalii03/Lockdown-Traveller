@@ -195,6 +195,12 @@ public class addTrainDetails extends javax.swing.JFrame {
         jLabel19.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel19.setText("Fare for AC(in rupees)");
 
+        fareAc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                fareAcActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -350,7 +356,7 @@ public class addTrainDetails extends javax.swing.JFrame {
         } 
         else{
         try{
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3308/softablitz?","root","");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/softablitz?","root","03052000@aA");
             Statement st = con.createStatement();
             String sql="select * from trainstatus";
             ResultSet rs = st.executeQuery(sql);
@@ -371,7 +377,13 @@ public class addTrainDetails extends javax.swing.JFrame {
                 else{ st.executeUpdate("insert into train values('"+train_no.getText()+"','"+fareAc.getText()+"','"+fareSleeper.getText()+"')");
             }
             }
-            st.executeUpdate("insert into trainstatus values('"+train_id.getText()+"','"+train_no.getText()+"','"+source.getText()+"','"+destination.getText()+"','"+distance.getText()+"','"+arrival.getText()+"','"+departure.getText()+"','"+ac.getText()+"','"+sleeper.getText()+"')");
+            st.executeUpdate("insert into trainstatus values('"+train_id.getText()+"','"+train_no.getText()+"','"+source.getText()+"','"+destination.getText()+"','"+distance.getText()+"','"+arrival.getText()+"','"+departure.getText()+"')");
+            st.executeUpdate("insert into availability values('"+train_id.getText()+"',DATE_ADD(Date(now()),Interval 1 DAY),'"+ac.getText()+"','"+sleeper.getText()+"')");
+            st.executeUpdate("insert into availability values('"+train_id.getText()+"',DATE_ADD(Date(now()),Interval 2 DAY),'"+ac.getText()+"','"+sleeper.getText()+"')");
+            st.executeUpdate("insert into availability values('"+train_id.getText()+"',DATE_ADD(Date(now()),Interval 3 DAY),'"+ac.getText()+"','"+sleeper.getText()+"')");
+            st.executeUpdate("insert into availability values('"+train_id.getText()+"',DATE_ADD(Date(now()),Interval 4 DAY),'"+ac.getText()+"','"+sleeper.getText()+"')");
+            st.executeUpdate("insert into availability values('"+train_id.getText()+"',DATE_ADD(Date(now()),Interval 5 DAY),'"+ac.getText()+"','"+sleeper.getText()+"')");
+            
             con.close();
         }
         catch(Exception e){
@@ -388,6 +400,10 @@ public class addTrainDetails extends javax.swing.JFrame {
        
         
     }//GEN-LAST:event_ADDActionPerformed
+
+    private void fareAcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fareAcActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fareAcActionPerformed
     /*protected void setText(){
         train_id.setText(train_id1);
         train_no.setText(train_no1);
